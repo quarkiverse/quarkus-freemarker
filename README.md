@@ -1,22 +1,33 @@
-# Welcome to Quarkiverse!
+# Quarkus Freemarker
 
-Congratulations and thank you for creating a new Quarkus extension project in Quarkiverse!
+Freemarker is a very popular and mature templating engine. Its integration as a Quarkus extension
+provides developers ease of configuration, and offers support for native images.
 
-Feel free to replace this content with the proper description of your new project and necessary instructions how to use and contribute to it.
-
-You can find the basic info, Quarkiverse policies and conventions in [the Quarkiverse wiki](https://github.com/quarkiverse/quarkiverse/wiki).
-
-Need to quickly create a new Quarkus extension Maven project? Just execute the command below replacing the template values with your preferred ones:
+To get started, add the dependency:
 ```
-mvn io.quarkus:quarkus-maven-plugin:<QUARKUS_VERSION>:create-extension -N \
-    -DgroupId=<EXTENSION_GROUP_ID> \ 
-    -DartifactId=<EXTENSION_ARTIFACT_ID> \  
-    -Dversion=<INITIAL_VERSION> \ 
-    -Dquarkus.nameBase="<EXTENSION_SIMPLE_NAME>"
+<dependency>
+    <groupId>io.quarkiverse</groupId>
+    <artifactId>quarkus-freemarker</artifactId>
+</dependency>
 ```
 
-In case you are creating a Quarkus extension project for the first time, please follow [Building My First Extension](https://quarkus.io/guides/building-my-first-extension) guide.
+Add some `ftl` templates in `src/main/resources/freemarker/templates`:
+```
+Hello ${name}!
+```
 
-Other useful articles related to Quarkus extension development can be found under the [Writing Extensions](https://quarkus.io/guides/#writing-extensions) guide category on the [Quarkus.io](http://quarkus.io) website.
+Inject the template in your code:
+```
+@Inject
+@TemplatePath("hello.ftl")
+Template hello;
+```
 
-Thanks again, good luck and have fun!
+Build a model and start rendering your template:
+```
+StringWriter stringWriter = new StringWriter();
+hello.process(Map.of("name", "bob"), stringWriter);
+String result = stringWriter.toString();
+```
+
+For more details, check the complete [documentation](https://quarkus.io/guides/freemarker).
