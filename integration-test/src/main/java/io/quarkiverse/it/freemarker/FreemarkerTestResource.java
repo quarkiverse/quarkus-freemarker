@@ -1,4 +1,4 @@
-package io.quarkus.it.freemarker;
+package io.quarkiverse.it.freemarker;
 
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 
@@ -16,7 +16,7 @@ import javax.ws.rs.QueryParam;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import io.quarkus.freemarker.runtime.TemplatePath;
+import io.quarkiverse.freemarker.TemplatePath;
 
 @Path("/freemarker")
 public class FreemarkerTestResource {
