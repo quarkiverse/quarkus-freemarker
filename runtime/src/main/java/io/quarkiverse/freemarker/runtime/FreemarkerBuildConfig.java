@@ -1,4 +1,4 @@
-package io.quarkus.freemarker.runtime;
+package io.quarkiverse.freemarker.runtime;
 
 import java.util.List;
 import java.util.Map;

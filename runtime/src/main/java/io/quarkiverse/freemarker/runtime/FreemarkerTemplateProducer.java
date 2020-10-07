@@ -1,4 +1,4 @@
-package io.quarkus.freemarker.runtime;
+package io.quarkiverse.freemarker.runtime;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -10,6 +10,7 @@ import javax.inject.Singleton;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import io.quarkiverse.freemarker.TemplatePath;
 
 @Singleton
 public class FreemarkerTemplateProducer {

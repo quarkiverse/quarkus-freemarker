@@ -1,4 +1,4 @@
-package io.quarkus.freemarker;
+package io.quarkiverse.freemarker;
 
 import java.io.IOException;
 import java.net.URI;
@@ -23,6 +23,9 @@ import org.jboss.logging.Logger;
 
 import freemarker.ext.jython.JythonModel;
 import freemarker.ext.jython.JythonWrapper;
+import io.quarkiverse.freemarker.runtime.FreemarkerBuildConfig;
+import io.quarkiverse.freemarker.runtime.FreemarkerConfigurationProducer;
+import io.quarkiverse.freemarker.runtime.FreemarkerTemplateProducer;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
@@ -30,10 +33,6 @@ import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.NativeImageResourceBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.RuntimeInitializedClassBuildItem;
-import io.quarkus.freemarker.runtime.FreemarkerBuildConfig;
-import io.quarkus.freemarker.runtime.FreemarkerConfigurationProducer;
-import io.quarkus.freemarker.runtime.FreemarkerTemplateProducer;
-import io.quarkus.freemarker.runtime.TemplatePath;
 
 public class FreemarkerProcessor {
 

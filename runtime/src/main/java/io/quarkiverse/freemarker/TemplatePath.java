@@ -1,4 +1,4 @@
-package io.quarkus.freemarker.runtime;
+package io.quarkiverse.freemarker;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;

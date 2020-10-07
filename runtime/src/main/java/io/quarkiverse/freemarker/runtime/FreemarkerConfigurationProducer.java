@@ -1,4 +1,4 @@
-package io.quarkus.freemarker.runtime;
+package io.quarkiverse.freemarker.runtime;
 
 import static java.util.Collections.*;
 import static java.util.stream.Collectors.*;

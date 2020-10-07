@@ -1,4 +1,4 @@
-package io.quarkus.it.freemarker;
+package io.quarkiverse.it.freemarker;
 
 import io.quarkus.test.junit.NativeImageTest;
 

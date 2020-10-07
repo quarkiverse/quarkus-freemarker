@@ -1,4 +1,4 @@
-package io.quarkus.freemarker.runtime;
+package io.quarkiverse.freemarker.runtime;
 
 import com.oracle.svm.core.annotate.Substitute;
 import com.oracle.svm.core.annotate.TargetClass;

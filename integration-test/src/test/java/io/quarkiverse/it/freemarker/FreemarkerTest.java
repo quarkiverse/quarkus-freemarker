@@ -1,4 +1,4 @@
-package io.quarkus.it.freemarker;
+package io.quarkiverse.it.freemarker;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
