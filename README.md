@@ -4,7 +4,8 @@ Freemarker is a very popular and mature templating engine. Its integration as a 
 provides developers ease of configuration, and offers support for native images.
 
 To get started, add the dependency:
-```
+
+```xml
 <dependency>
     <groupId>io.quarkiverse</groupId>
     <artifactId>quarkus-freemarker</artifactId>
@@ -17,14 +18,16 @@ Hello ${name}!
 ```
 
 Inject the template in your code:
-```
+
+```java
 @Inject
 @TemplatePath("hello.ftl")
 Template hello;
 ```
 
 Build a model and start rendering your template:
-```
+
+```java
 StringWriter stringWriter = new StringWriter();
 hello.process(Map.of("name", "bob"), stringWriter);
 String result = stringWriter.toString();
