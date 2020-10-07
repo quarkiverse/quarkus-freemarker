@@ -34,3 +34,9 @@ String result = stringWriter.toString();
 ```
 
 For more details, check the complete [documentation](https://quarkus.io/guides/freemarker).
+
+## Contributors
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
