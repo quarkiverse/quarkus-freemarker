@@ -73,7 +73,7 @@
 
     <profiles>
         <profile>
-            <id>perform-release</id>
+            <id>it</id>
             <activation>
                 <property>
                     <name>performRelease</name>
