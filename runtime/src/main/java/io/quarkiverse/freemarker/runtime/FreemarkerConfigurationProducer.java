@@ -86,7 +86,7 @@ public class FreemarkerConfigurationProducer {
 
     private ClassTemplateLoader newClassTemplateLoader(String location) {
         // assuming an absolute location (i.e. starts with a '/')
-        return new ClassTemplateLoader(getClass(), "/" + location);
+        return new ClassTemplateLoader(Thread.currentThread().getContextClassLoader(), "/" + location);
     }
 
     private FileTemplateLoader newFileTemplateLoader(String path) {
