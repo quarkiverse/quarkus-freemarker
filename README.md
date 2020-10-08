@@ -35,7 +35,10 @@ String result = stringWriter.toString();
 
 For more details, check the complete [documentation](https://quarkus.io/guides/freemarker).
 
-## Contributors
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
