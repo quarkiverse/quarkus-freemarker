@@ -82,13 +82,13 @@ public class FreemarkerProcessor {
     }
 
     @BuildStep
-    public void reflection(BuildProducer<ReflectiveClassBuildItem> additionalBeanBuildItemProducer,
+    public void reflection(BuildProducer<ReflectiveClassBuildItem> reflectiveClassBuildItemProducer,
             FreemarkerBuildConfig config) {
 
         LOGGER.info("Adding directives " + config.directive.values());
         config.directive.values().stream()
                 .map(classname -> new ReflectiveClassBuildItem(false, false, classname))
-                .forEach(additionalBeanBuildItemProducer::produce);
+                .forEach(reflectiveClassBuildItemProducer::produce);
     }
 
     private List<String> discoverTemplates(List<String> locations) throws IOException, URISyntaxException {
