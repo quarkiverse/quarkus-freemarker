@@ -33,7 +33,7 @@ hello.process(Map.of("name", "bob"), stringWriter);
 String result = stringWriter.toString();
 ```
 
-For more details, check the complete [documentation](doc/freemarker.adoc).
+For more details, check the complete [documentation](https://quarkiverse.github.io/quarkiverse-docs/quarkiverse-freemarker/dev/index.html).
 
 ## Contributors ✨
 

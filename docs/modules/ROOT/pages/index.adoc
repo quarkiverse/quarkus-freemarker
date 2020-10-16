@@ -6,13 +6,9 @@ https://github.com/quarkusio/quarkus/tree/master/docs/src/main/asciidoc
 = Freemarker Templating Engine
 :extension-status: preview
 
-include::./attributes.adoc[]
-
 Freemarker is a very popular and mature templating engine. Its integration as a Quarkus extension
 provides developers ease of configuration, and offers support for native images.
 In this guide, you will learn how to easily render Freemarker templates in your application.
-
-include::./status-include.adoc[]
 
 == Hello World
 
@@ -32,9 +28,9 @@ We'll start with a very simple template:
 .hello.ftl
 [source]
 ----
-Hello ${name}! <1>
+Hello $\{name}! <1>
 ----
-<1> `${name}` is a value expression that is evaluated when the template is rendered.
+<1> `$\{name}` is a value expression that is evaluated when the template is rendered.
 
 Now let's inject the template in the resource class.
 
@@ -146,7 +142,7 @@ quarkus.freemarker.directive.base64=org.acme.quarkus.sample.Base64Directive
 And finally, we would use it in templates such as:
 [source]
 ----
-Hello <@base64>${name}</@base64>!
+Hello <@base64>$\{name}</@base64>!
 ----
 
 This would be rendered as:
@@ -168,4 +164,4 @@ Additionnaly, they should be annotated with
 [[freemarker-configuration-reference]]
 == Freemarker Configuration Reference
 
-include::{generated-dir}/config/quarkus-freemarker.adoc[leveloffset=+1, opts=optional]
+include::config.adoc[leveloffset=+1, opts=optional]
