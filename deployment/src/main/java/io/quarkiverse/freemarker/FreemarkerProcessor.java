@@ -76,8 +76,7 @@ public class FreemarkerProcessor {
     AdditionalBeanBuildItem additionalBeans() {
         return AdditionalBeanBuildItem.builder()
                 .setUnremovable()
-                .addBeanClasses(FreemarkerConfigurationProducer.class, TemplatePath.class, FreemarkerTemplateProducer.class,
-                        FreemarkerTemplateProducer.class)
+                .addBeanClasses(FreemarkerConfigurationProducer.class, TemplatePath.class, FreemarkerTemplateProducer.class)
                 .build();
     }
 
