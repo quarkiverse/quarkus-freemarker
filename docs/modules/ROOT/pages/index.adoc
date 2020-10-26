@@ -12,14 +12,14 @@ In this guide, you will learn how to easily render Freemarker templates in your 
 
 == Hello World
 
-If you want to use Freemarker you need to add the `quarkus-freemarker` extension first.
+If you want to use Freemarker you need to add the `quarkiverse-freemarker` extension first.
 In your `pom.xml` file, add:
 
 [source,xml]
 ----
 <dependency>
     <groupId>io.quarkiverse</groupId>
-    <artifactId>quarkus-freemarker</artifactId>
+    <artifactId>quarkiverse-freemarker</artifactId>
 </dependency>
 ----
 
@@ -28,7 +28,7 @@ We'll start with a very simple template:
 .hello.ftl
 [source]
 ----
-Hello $\{name}! <1>
+Hello ${name}! <1>
 ----
 <1> `$\{name}` is a value expression that is evaluated when the template is rendered.
 
