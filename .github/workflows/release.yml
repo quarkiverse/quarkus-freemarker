@@ -40,7 +40,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-            https://github.com/quarkiverse/quarkiverse-template/blob/master/.github/workflows/release.yml
 
       - name: Configure Git author
         uses: oleksiyrudenko/gha-git-credentials@v1
