@@ -21,8 +21,6 @@ jobs:
           metadata-file-path: '.github/project.yml'
 
       - uses: actions/checkout@v2
-        with:
-          token: ${{secrets.GITHUB_TOKEN}}
 
       - name: Import GPG key
         id: import_gpg
@@ -42,11 +40,12 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-            
+            https://github.com/quarkiverse/quarkiverse-template/blob/master/.github/workflows/release.yml
+
       - name: Configure Git author
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+        uses: oleksiyrudenko/gha-git-credentials@v1
+        with:
+          token: '${{ secrets.GITHUB_TOKEN }}'
 
       - name: maven release ${{steps.metadata.outputs.current-version}}
         run: |
