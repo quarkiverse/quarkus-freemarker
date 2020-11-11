@@ -11,7 +11,7 @@
     <groupId>io.quarkiverse.freemarker</groupId>
     <artifactId>quarkus-freemarker-parent</artifactId>
     <name>Quarkus - Freemarker - Parent</name>
-    <version>0.0.7</version>
+    <version>0.0.8-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -77,8 +77,4 @@
             </modules>
         </profile>
     </profiles>
-
-  <scm>
-    <tag>0.0.7</tag>
-  </scm>
 </project>
