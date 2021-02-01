@@ -29,7 +29,7 @@ public class FreemarkerTemplateProducer {
             }
         }
         if (path == null || path.value().isEmpty()) {
-            throw new IllegalStateException("No template reource path specified");
+            throw new IllegalStateException("No template resource path specified");
         }
         return configuration.getTemplate(path.value());
     }
