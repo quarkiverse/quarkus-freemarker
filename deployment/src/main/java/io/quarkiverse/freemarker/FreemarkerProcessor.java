@@ -59,7 +59,7 @@ public class FreemarkerProcessor {
     void runtimeInit(BuildProducer<RuntimeInitializedClassBuildItem> runtimeInitialized) {
 
         Stream.of(JythonWrapper.class, JythonModel.class)
-                .map(Class::getCanonicalName)
+                .map(Class::getName)
                 .map(RuntimeInitializedClassBuildItem::new)
                 .forEach(runtimeInitialized::produce);
     }
