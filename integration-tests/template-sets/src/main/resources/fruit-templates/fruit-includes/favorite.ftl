@@ -1,0 +1,1 @@
+${favorite} is my favorite fruit!

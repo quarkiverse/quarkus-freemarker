@@ -1,0 +1,1 @@
+<#include "sports-includes/favorite.ftl"/> <#include "sports-includes/disliked.ftl"/>

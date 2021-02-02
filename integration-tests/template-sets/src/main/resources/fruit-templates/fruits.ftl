@@ -1,0 +1,1 @@
+<#include "fruit-includes/favorite.ftl"/> <#include "fruit-includes/disliked.ftl"/>
