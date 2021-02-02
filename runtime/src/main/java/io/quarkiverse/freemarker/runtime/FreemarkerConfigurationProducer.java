@@ -30,17 +30,27 @@ public class FreemarkerConfigurationProducer {
 
     private static final Logger log = LoggerFactory.getLogger(FreemarkerConfigurationProducer.class);
 
+    private volatile List<String> resourcePaths;
+    private volatile Map<String, String> directives;
+
+    public void initialize(List<String> resourcePaths, Map<String, String> directives) {
+        this.resourcePaths = resourcePaths;
+        this.directives = directives;
+    }
+
     @DefaultBean
     @Singleton
     @Produces
-    public Configuration configuration(FreemarkerBuildConfig buildConfig, FreemarkerConfig config)
+    public Configuration configuration(FreemarkerConfig config)
             throws ClassNotFoundException, IllegalAccessException, InstantiationException {
 
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_30);
 
         List<TemplateLoader> loaders = new ArrayList<>();
-        log.info("Adding build time locations " + buildConfig.resourcePaths);
-        loaders.addAll(buildConfig.resourcePaths.stream().map(this::newClassTemplateLoader).collect(toList()));
+        log.info("Adding build time locations " + resourcePaths);
+        resourcePaths.stream()
+                .map(this::newClassTemplateLoader)
+                .forEach(loaders::add);
 
         log.info("Adding runtime locations " + config.filePaths.orElse(emptyList()));
         loaders.addAll(config.filePaths.orElse(emptyList()).stream().map(this::newFileTemplateLoader).collect(toList()));
@@ -62,7 +72,7 @@ public class FreemarkerConfigurationProducer {
             cfg.setObjectWrapper(objectWrapper);
         }
 
-        for (Map.Entry<String, String> directive : buildConfig.directive.entrySet()) {
+        for (Map.Entry<String, String> directive : directives.entrySet()) {
             Class<?> directiveClass = Thread.currentThread().getContextClassLoader().loadClass(directive.getValue());
             cfg.setSharedVariable(directive.getKey(), (TemplateDirectiveModel) directiveClass.newInstance());
         }
