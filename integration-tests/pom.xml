@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.quarkiverse.freemarker</groupId>
+        <artifactId>quarkus-freemarker-parent</artifactId>
+        <version>0.1.1-SNAPSHOT</version>
+        <relativePath>../</relativePath>
+    </parent>
+
+    <artifactId>quarkiverse-freemarker-integration-tests</artifactId>
+    <packaging>pom</packaging>
+    <name>Quarkus - Freemarker - Integration tests</name>
+
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <gpg.skip>true</gpg.skip>
+        <quarkus.build.skip>${skipTests}</quarkus.build.skip>
+        <native.surefire.skip>${skipTests}</native.surefire.skip>
+    </properties>
+
+    <modules>
+        <module>config-defaults</module>
+        <module>legacy-config</module>
+        <module>template-sets</module>
+    </modules>
+</project>

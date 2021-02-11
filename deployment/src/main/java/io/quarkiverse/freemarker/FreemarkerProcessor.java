@@ -1,36 +1,28 @@
 package io.quarkiverse.freemarker;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.commons.io.FilenameUtils;
 import org.jboss.logging.Logger;
 
 import freemarker.ext.jython.JythonModel;
 import freemarker.ext.jython.JythonWrapper;
 import io.quarkiverse.freemarker.runtime.FreemarkerBuildConfig;
+import io.quarkiverse.freemarker.runtime.FreemarkerBuildConfig.TemplateSet;
 import io.quarkiverse.freemarker.runtime.FreemarkerConfigurationProducer;
+import io.quarkiverse.freemarker.runtime.FreemarkerRecorder;
 import io.quarkiverse.freemarker.runtime.FreemarkerTemplateProducer;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
+import io.quarkus.arc.deployment.BeanContainerBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
+import io.quarkus.deployment.annotations.ExecutionTime;
+import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
-import io.quarkus.deployment.builditem.nativeimage.NativeImageResourceBuildItem;
+import io.quarkus.deployment.builditem.nativeimage.NativeImageResourcePatternsBuildItem;
+import io.quarkus.deployment.builditem.nativeimage.NativeImageResourcePatternsBuildItem.Builder;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.RuntimeInitializedClassBuildItem;
 
@@ -41,14 +33,6 @@ public class FreemarkerProcessor {
     private static final String FEATURE = "freemarker";
 
     private static final String CLASSPATH_PROTOCOL = "classpath";
-
-    private static final String JAR_PROTOCOL = "jar";
-
-    private static final String FILE_PROTOCOL = "file";
-
-    private static final String ADD_MSG = "Adding application freemarker templates in path ''{0}'' using protocol ''{1}''";
-
-    private static final String UNSUPPORTED_MSG = "Unsupported URL protocol ''{0}'' for path ''{1}''. Freemarker files will not be discovered.";
 
     @BuildStep
     FeatureBuildItem feature() {
@@ -64,12 +48,59 @@ public class FreemarkerProcessor {
                 .forEach(runtimeInitialized::produce);
     }
 
+    @SuppressWarnings("deprecation")
     @BuildStep
-    void discoverTemplates(BuildProducer<NativeImageResourceBuildItem> resourceProducer, FreemarkerBuildConfig config)
-            throws IOException, URISyntaxException {
+    void discoverTemplates(BuildProducer<TemplateSetBuildItem> templateSets, FreemarkerBuildConfig config) {
 
-        final List<String> nativeResources = discoverTemplates(config.resourcePaths);
-        resourceProducer.produce(new NativeImageResourceBuildItem(nativeResources.toArray(new String[0])));
+        if (config.resourcePaths.isPresent()) {
+            for (String basePath : config.resourcePaths.get()) {
+                // Strip any 'classpath:' protocol prefixes because they are assumed
+                // but not recognized by ClassLoader.getResources()
+                if (basePath.startsWith(CLASSPATH_PROTOCOL + ':')) {
+                    basePath = basePath.substring(CLASSPATH_PROTOCOL.length() + 1);
+                }
+                templateSets.produce(TemplateSetBuildItem.builder().basePath(basePath).includeGlob("**").build());
+            }
+        }
+
+        if (!config.resourcePaths.isPresent() && !config.defaultTemplateSet.isSetByUser()) {
+            /* produce the default */
+            templateSets.produce(TemplateSetBuildItem.builder().basePath("freemarker/templates").includeGlob("**").build());
+        }
+
+        if (config.defaultTemplateSet.isSetByUser()) {
+            templateSets.produce(toBuildItem(config.defaultTemplateSet.assertValid(null)));
+        }
+
+        for (Map.Entry<String, TemplateSet> entry : config.namedTemplateSets.entrySet()) {
+            templateSets.produce(toBuildItem(entry.getValue().assertValid(entry.getKey())));
+        }
+    }
+
+    static TemplateSetBuildItem toBuildItem(TemplateSet templateSet) {
+        TemplateSetBuildItem.Builder builder = TemplateSetBuildItem.builder();
+
+        builder.basePath(templateSet.basePath.get());
+        templateSet.includes.ifPresent(builder::includeGlobs);
+        templateSet.excludes.ifPresent(builder::excludeGlobs);
+
+        return builder.build();
+    }
+
+    @BuildStep
+    void nativeResources(
+            List<TemplateSetBuildItem> templateSets,
+            BuildProducer<NativeImageResourcePatternsBuildItem> nativeImageResources) {
+        for (TemplateSetBuildItem templateSet : templateSets) {
+            final Builder builder = NativeImageResourcePatternsBuildItem.builder();
+            templateSet.getIncludeGlobs().stream()
+                    .map(templateSet::resolve)
+                    .forEach(builder::includeGlob);
+            templateSet.getExcludeGlobs().stream()
+                    .map(templateSet::resolve)
+                    .forEach(builder::excludeGlob);
+            nativeImageResources.produce(builder.build());
+        }
     }
 
     @BuildStep
@@ -90,69 +121,18 @@ public class FreemarkerProcessor {
                 .forEach(reflectiveClassBuildItemProducer::produce);
     }
 
-    private List<String> discoverTemplates(List<String> locations) throws IOException, URISyntaxException {
-
-        List<String> resources = new ArrayList<>();
-
-        for (String location : locations) {
-
-            // Strip any 'classpath:' protocol prefixes because they are assumed
-            // but not recognized by ClassLoader.getResources()
-            if (location.startsWith(CLASSPATH_PROTOCOL + ':')) {
-                location = location.substring(CLASSPATH_PROTOCOL.length() + 1);
-            }
-
-            Enumeration<URL> templates = Thread.currentThread().getContextClassLoader().getResources(location);
-
-            while (templates.hasMoreElements()) {
-                URL path = templates.nextElement();
-                LOGGER.infov(ADD_MSG, path.getPath(), path.getProtocol());
-                final Set<String> freemarkerTemplates;
-                if (JAR_PROTOCOL.equals(path.getProtocol())) {
-                    try (final FileSystem fileSystem = initFileSystem(path.toURI())) {
-                        freemarkerTemplates = getTemplatesFromPath(location, path);
-                    }
-                } else if (FILE_PROTOCOL.equals(path.getProtocol())) {
-                    freemarkerTemplates = getTemplatesFromPath(location, path);
-                } else {
-                    LOGGER.warnv(UNSUPPORTED_MSG, path.getProtocol(), path.getPath());
-                    freemarkerTemplates = null;
-                }
-
-                if (freemarkerTemplates != null) {
-                    resources.addAll(freemarkerTemplates);
-                }
-            }
-        }
-        return resources;
-    }
-
-    private Set<String> getTemplatesFromPath(final String location, final URL pathURL)
-            throws IOException, URISyntaxException {
-
-        try (final Stream<Path> pathStream = Files.walk(Paths.get(pathURL.toURI()))) {
-            return pathStream
-                    .filter(Files::isRegularFile)
-                    .map(path -> getSubpath(location, path))
-                    .peek(subpath -> LOGGER.info("Discovered: " + subpath))
-                    .collect(Collectors.toSet());
-        }
-    }
-
-    private String getSubpath(String location, Path path) {
-        String file = FilenameUtils.separatorsToUnix(path.toString());
-        int indexOf = file.lastIndexOf("/" + location + "/");
-        if (indexOf == -1) {
-            indexOf = file.lastIndexOf("/" + location);
-        }
-        String substring = file.substring(indexOf + 1);
-        return FilenameUtils.separatorsToUnix(substring);
-    }
-
-    private FileSystem initFileSystem(final URI uri) throws IOException {
-        final Map<String, String> env = new HashMap<>();
-        env.put("create", "true");
-        return FileSystems.newFileSystem(uri, env);
+    @BuildStep
+    @Record(ExecutionTime.RUNTIME_INIT)
+    void buildClients(
+            FreemarkerRecorder recorder,
+            BeanContainerBuildItem beanContainer,
+            List<TemplateSetBuildItem> templateSets,
+            FreemarkerBuildConfig buildConfig) {
+        final List<String> resourcePaths = templateSets.stream()
+                .map(TemplateSetBuildItem::getBasePath)
+                .map(basePath -> basePath.orElse(""))
+                .collect(Collectors.toList());
+        recorder.initConfigurationProducer(beanContainer.getValue(), resourcePaths, buildConfig.directive);
     }
 
 }
