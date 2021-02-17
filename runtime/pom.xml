@@ -3,7 +3,7 @@
     <parent>
         <groupId>io.quarkiverse.freemarker</groupId>
         <artifactId>quarkus-freemarker-parent</artifactId>
-        <version>0.1.1-SNAPSHOT</version>
+        <version>0.2.0-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>

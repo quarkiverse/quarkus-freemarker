@@ -80,7 +80,7 @@ public class FreemarkerProcessor {
     static TemplateSetBuildItem toBuildItem(TemplateSet templateSet) {
         TemplateSetBuildItem.Builder builder = TemplateSetBuildItem.builder();
 
-        builder.basePath(templateSet.basePath.get());
+        templateSet.basePath.ifPresent(builder::basePath);
         templateSet.includes.ifPresent(builder::includeGlobs);
         templateSet.excludes.ifPresent(builder::excludeGlobs);
 
