@@ -4,7 +4,7 @@
     <parent>
         <groupId>io.quarkiverse.freemarker</groupId>
         <artifactId>quarkus-freemarker-parent</artifactId>
-        <version>0.2.0.CR3-SNAPSHOT</version>
+        <version>0.2.0.CR4-SNAPSHOT</version>
     </parent>
 
     <artifactId>quarkiverse-freemarker-integration-tests</artifactId>
@@ -13,7 +13,6 @@
 
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
-        <maven.javadoc.skip>true</maven.javadoc.skip>
 
         <gpg.skip>true</gpg.skip>
         <quarkus.build.skip>${skipTests}</quarkus.build.skip>
