@@ -7,7 +7,7 @@ To get started, add the dependency:
 
 ```xml
 <dependency>
-    <groupId>io.quarkiverse</groupId>
+    <groupId>io.quarkiverse.freemarker</groupId>
     <artifactId>quarkus-freemarker</artifactId>
 </dependency>
 ```
