@@ -12,8 +12,7 @@ import java.util.Map;
 import javax.enterprise.inject.Produces;
 import javax.inject.Singleton;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.jboss.logging.Logger;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
@@ -28,7 +27,7 @@ import io.quarkus.arc.DefaultBean;
 @Singleton
 public class FreemarkerConfigurationProducer {
 
-    private static final Logger log = LoggerFactory.getLogger(FreemarkerConfigurationProducer.class);
+    private static final Logger LOGGER = Logger.getLogger(FreemarkerConfigurationProducer.class);
 
     @DefaultBean
     @Singleton
@@ -40,12 +39,12 @@ public class FreemarkerConfigurationProducer {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_30);
 
         List<TemplateLoader> loaders = new ArrayList<>();
-        log.info("Adding build time locations " + freemarkerBuildConfigSupport.getResourcePaths());
+        LOGGER.debugf("Adding build time locations: %s", freemarkerBuildConfigSupport.getResourcePaths());
         freemarkerBuildConfigSupport.getResourcePaths().stream()
                 .map(this::newClassTemplateLoader)
                 .forEach(loaders::add);
 
-        log.info("Adding runtime locations " + config.filePaths.orElse(emptyList()));
+        LOGGER.debugf("Adding runtime locations: %s", config.filePaths.orElse(emptyList()));
         loaders.addAll(config.filePaths.orElse(emptyList()).stream().map(this::newFileTemplateLoader).collect(toList()));
 
         MultiTemplateLoader mtl = new MultiTemplateLoader(loaders.toArray(new TemplateLoader[0]));

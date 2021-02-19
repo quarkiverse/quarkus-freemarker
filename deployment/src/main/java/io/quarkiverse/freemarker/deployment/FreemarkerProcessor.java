@@ -119,7 +119,7 @@ public class FreemarkerProcessor {
     public void reflection(BuildProducer<ReflectiveClassBuildItem> reflectiveClassBuildItemProducer,
             FreemarkerBuildConfig config) {
 
-        LOGGER.info("Adding directives " + config.directive.values());
+        LOGGER.debugf("Adding directives: %s", config.directive.values());
         config.directive.values().stream()
                 .map(classname -> new ReflectiveClassBuildItem(false, false, classname))
                 .forEach(reflectiveClassBuildItemProducer::produce);
