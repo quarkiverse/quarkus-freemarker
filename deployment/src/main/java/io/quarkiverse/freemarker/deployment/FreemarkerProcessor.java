@@ -119,8 +119,8 @@ public class FreemarkerProcessor {
     public void reflection(BuildProducer<ReflectiveClassBuildItem> reflectiveClassBuildItemProducer,
             FreemarkerBuildConfig config) {
 
-        LOGGER.debugf("Adding directives: %s", config.directive.values());
-        config.directive.values().stream()
+        LOGGER.debugf("Adding directives: %s", config.directives.values());
+        config.directives.values().stream()
                 .map(classname -> new ReflectiveClassBuildItem(false, false, classname))
                 .forEach(reflectiveClassBuildItemProducer::produce);
     }
@@ -137,7 +137,7 @@ public class FreemarkerProcessor {
 
         return SyntheticBeanBuildItem.configure(FreemarkerBuildConfigSupport.class)
                 .scope(Singleton.class)
-                .supplier(recorder.freemarkerBuildConfigSupport(resourcePaths, buildConfig.directive))
+                .supplier(recorder.freemarkerBuildConfigSupport(resourcePaths, buildConfig.directives))
                 .done();
     }
 }

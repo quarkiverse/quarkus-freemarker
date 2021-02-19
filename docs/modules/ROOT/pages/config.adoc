@@ -98,7 +98,7 @@ If true, the object wrapper will be configured to expose fields.
 |
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-freemarker_quarkus.freemarker.directive-directive]]`link:#quarkus-freemarker_quarkus.freemarker.directive-directive[quarkus.freemarker.directive]`
+a|icon:lock[title=Fixed at build time] [[quarkus-freemarker_quarkus.freemarker.directives-directives]]`link:#quarkus-freemarker_quarkus.freemarker.directives-directives[quarkus.freemarker.directives]`
 
 [.description]
 --
