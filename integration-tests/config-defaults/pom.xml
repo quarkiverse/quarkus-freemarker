@@ -7,8 +7,8 @@
         <version>0.3.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>quarkiverse-freemarker-integration-test-config-defaults</artifactId>
-    <name>Quarkus - Freemarker - Integration test - Configuration defaults</name>
+    <artifactId>quarkiverse-freemarker-integration-tests-config-defaults</artifactId>
+    <name>Quarkus - Freemarker - Integration Tests - Configuration defaults</name>
 
     <dependencies>
         <dependency>
