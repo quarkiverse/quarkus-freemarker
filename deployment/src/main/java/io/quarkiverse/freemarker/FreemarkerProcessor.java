@@ -122,7 +122,7 @@ public class FreemarkerProcessor {
     }
 
     @BuildStep
-    @Record(ExecutionTime.RUNTIME_INIT)
+    @Record(ExecutionTime.STATIC_INIT)
     void buildClients(
             FreemarkerRecorder recorder,
             BeanContainerBuildItem beanContainer,
