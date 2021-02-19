@@ -1,7 +1,7 @@
 package io.quarkiverse.freemarker.runtime;
 
-import static java.util.Collections.*;
-import static java.util.stream.Collectors.*;
+import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.toList;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,25 +30,18 @@ public class FreemarkerConfigurationProducer {
 
     private static final Logger log = LoggerFactory.getLogger(FreemarkerConfigurationProducer.class);
 
-    private volatile List<String> resourcePaths;
-    private volatile Map<String, String> directives;
-
-    public void initialize(List<String> resourcePaths, Map<String, String> directives) {
-        this.resourcePaths = resourcePaths;
-        this.directives = directives;
-    }
-
     @DefaultBean
     @Singleton
     @Produces
-    public Configuration configuration(FreemarkerConfig config)
+    public Configuration configuration(FreemarkerBuildConfigSupport freemarkerBuildConfigSupport,
+            FreemarkerConfig config)
             throws ClassNotFoundException, IllegalAccessException, InstantiationException {
 
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_30);
 
         List<TemplateLoader> loaders = new ArrayList<>();
-        log.info("Adding build time locations " + resourcePaths);
-        resourcePaths.stream()
+        log.info("Adding build time locations " + freemarkerBuildConfigSupport.getResourcePaths());
+        freemarkerBuildConfigSupport.getResourcePaths().stream()
                 .map(this::newClassTemplateLoader)
                 .forEach(loaders::add);
 
@@ -72,7 +65,7 @@ public class FreemarkerConfigurationProducer {
             cfg.setObjectWrapper(objectWrapper);
         }
 
-        for (Map.Entry<String, String> directive : directives.entrySet()) {
+        for (Map.Entry<String, String> directive : freemarkerBuildConfigSupport.getDirectives().entrySet()) {
             Class<?> directiveClass = Thread.currentThread().getContextClassLoader().loadClass(directive.getValue());
             cfg.setSharedVariable(directive.getKey(), (TemplateDirectiveModel) directiveClass.newInstance());
         }
