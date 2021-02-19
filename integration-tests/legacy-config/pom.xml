@@ -7,8 +7,8 @@
         <version>0.3.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>quarkiverse-freemarker-integration-test-legacy-config</artifactId>
-    <name>Quarkus - Freemarker - Integration test - Legacy configuration</name>
+    <artifactId>quarkiverse-freemarker-integration-tests-legacy-config</artifactId>
+    <name>Quarkus - Freemarker - Integration Tests - Legacy configuration</name>
 
     <dependencies>
         <dependency>

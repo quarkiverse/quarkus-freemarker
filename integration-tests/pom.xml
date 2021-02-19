@@ -9,7 +9,7 @@
 
     <artifactId>quarkiverse-freemarker-integration-tests</artifactId>
     <packaging>pom</packaging>
-    <name>Quarkus - Freemarker - Integration tests</name>
+    <name>Quarkus - Freemarker - Integration Tests</name>
 
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
