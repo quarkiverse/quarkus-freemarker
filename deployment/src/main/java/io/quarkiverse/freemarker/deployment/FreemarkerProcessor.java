@@ -1,4 +1,4 @@
-package io.quarkiverse.freemarker;
+package io.quarkiverse.freemarker.deployment;
 
 import java.util.List;
 import java.util.Map;
@@ -9,6 +9,7 @@ import org.jboss.logging.Logger;
 
 import freemarker.ext.jython.JythonModel;
 import freemarker.ext.jython.JythonWrapper;
+import io.quarkiverse.freemarker.TemplatePath;
 import io.quarkiverse.freemarker.runtime.FreemarkerBuildConfig;
 import io.quarkiverse.freemarker.runtime.FreemarkerBuildConfig.TemplateSet;
 import io.quarkiverse.freemarker.runtime.FreemarkerConfigurationProducer;

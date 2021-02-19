@@ -1,4 +1,4 @@
-package io.quarkiverse.freemarker;
+package io.quarkiverse.freemarker.deployment;
 
 import java.util.ArrayList;
 import java.util.Collection;
