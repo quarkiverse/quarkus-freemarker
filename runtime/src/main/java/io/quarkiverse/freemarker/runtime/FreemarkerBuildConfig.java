@@ -38,7 +38,7 @@ public class FreemarkerBuildConfig {
      * @see freemarker.template.Configuration#setSharedVariable(String, TemplateModel)
      */
     @ConfigItem
-    public Map<String, String> directive;
+    public Map<String, String> directives;
 
     /**
      * The default template set

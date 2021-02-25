@@ -1,21 +1,25 @@
-package io.quarkiverse.freemarker;
+package io.quarkiverse.freemarker.deployment;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.inject.Singleton;
+
 import org.jboss.logging.Logger;
 
 import freemarker.ext.jython.JythonModel;
 import freemarker.ext.jython.JythonWrapper;
+import io.quarkiverse.freemarker.TemplatePath;
 import io.quarkiverse.freemarker.runtime.FreemarkerBuildConfig;
 import io.quarkiverse.freemarker.runtime.FreemarkerBuildConfig.TemplateSet;
+import io.quarkiverse.freemarker.runtime.FreemarkerBuildConfigSupport;
 import io.quarkiverse.freemarker.runtime.FreemarkerConfigurationProducer;
 import io.quarkiverse.freemarker.runtime.FreemarkerRecorder;
 import io.quarkiverse.freemarker.runtime.FreemarkerTemplateProducer;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
-import io.quarkus.arc.deployment.BeanContainerBuildItem;
+import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
@@ -115,24 +119,25 @@ public class FreemarkerProcessor {
     public void reflection(BuildProducer<ReflectiveClassBuildItem> reflectiveClassBuildItemProducer,
             FreemarkerBuildConfig config) {
 
-        LOGGER.info("Adding directives " + config.directive.values());
-        config.directive.values().stream()
+        LOGGER.debugf("Adding directives: %s", config.directives.values());
+        config.directives.values().stream()
                 .map(classname -> new ReflectiveClassBuildItem(false, false, classname))
                 .forEach(reflectiveClassBuildItemProducer::produce);
     }
 
     @BuildStep
     @Record(ExecutionTime.STATIC_INIT)
-    void buildClients(
-            FreemarkerRecorder recorder,
-            BeanContainerBuildItem beanContainer,
+    SyntheticBeanBuildItem pushConfigurationBean(FreemarkerRecorder recorder,
             List<TemplateSetBuildItem> templateSets,
             FreemarkerBuildConfig buildConfig) {
         final List<String> resourcePaths = templateSets.stream()
                 .map(TemplateSetBuildItem::getBasePath)
                 .map(basePath -> basePath.orElse(""))
                 .collect(Collectors.toList());
-        recorder.initConfigurationProducer(beanContainer.getValue(), resourcePaths, buildConfig.directive);
-    }
 
+        return SyntheticBeanBuildItem.configure(FreemarkerBuildConfigSupport.class)
+                .scope(Singleton.class)
+                .supplier(recorder.freemarkerBuildConfigSupport(resourcePaths, buildConfig.directives))
+                .done();
+    }
 }

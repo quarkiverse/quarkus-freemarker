@@ -1,7 +1,7 @@
 package io.quarkiverse.freemarker.runtime;
 
-import static java.util.Collections.*;
-import static java.util.stream.Collectors.*;
+import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.toList;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,8 +12,7 @@ import java.util.Map;
 import javax.enterprise.inject.Produces;
 import javax.inject.Singleton;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.jboss.logging.Logger;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
@@ -28,31 +27,24 @@ import io.quarkus.arc.DefaultBean;
 @Singleton
 public class FreemarkerConfigurationProducer {
 
-    private static final Logger log = LoggerFactory.getLogger(FreemarkerConfigurationProducer.class);
-
-    private volatile List<String> resourcePaths;
-    private volatile Map<String, String> directives;
-
-    public void initialize(List<String> resourcePaths, Map<String, String> directives) {
-        this.resourcePaths = resourcePaths;
-        this.directives = directives;
-    }
+    private static final Logger LOGGER = Logger.getLogger(FreemarkerConfigurationProducer.class);
 
     @DefaultBean
     @Singleton
     @Produces
-    public Configuration configuration(FreemarkerConfig config)
+    public Configuration configuration(FreemarkerBuildConfigSupport freemarkerBuildConfigSupport,
+            FreemarkerConfig config)
             throws ClassNotFoundException, IllegalAccessException, InstantiationException {
 
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_30);
 
         List<TemplateLoader> loaders = new ArrayList<>();
-        log.info("Adding build time locations " + resourcePaths);
-        resourcePaths.stream()
+        LOGGER.debugf("Adding build time locations: %s", freemarkerBuildConfigSupport.getResourcePaths());
+        freemarkerBuildConfigSupport.getResourcePaths().stream()
                 .map(this::newClassTemplateLoader)
                 .forEach(loaders::add);
 
-        log.info("Adding runtime locations " + config.filePaths.orElse(emptyList()));
+        LOGGER.debugf("Adding runtime locations: %s", config.filePaths.orElse(emptyList()));
         loaders.addAll(config.filePaths.orElse(emptyList()).stream().map(this::newFileTemplateLoader).collect(toList()));
 
         MultiTemplateLoader mtl = new MultiTemplateLoader(loaders.toArray(new TemplateLoader[0]));
@@ -72,7 +64,7 @@ public class FreemarkerConfigurationProducer {
             cfg.setObjectWrapper(objectWrapper);
         }
 
-        for (Map.Entry<String, String> directive : directives.entrySet()) {
+        for (Map.Entry<String, String> directive : freemarkerBuildConfigSupport.getDirectives().entrySet()) {
             Class<?> directiveClass = Thread.currentThread().getContextClassLoader().loadClass(directive.getValue());
             cfg.setSharedVariable(directive.getKey(), (TemplateDirectiveModel) directiveClass.newInstance());
         }
