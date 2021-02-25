@@ -36,7 +36,7 @@ public class FreemarkerConfigurationProducer {
             FreemarkerConfig config)
             throws ClassNotFoundException, IllegalAccessException, InstantiationException {
 
-        Configuration cfg = new Configuration(Configuration.VERSION_2_3_30);
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_31);
 
         List<TemplateLoader> loaders = new ArrayList<>();
         LOGGER.debugf("Adding build time locations: %s", freemarkerBuildConfigSupport.getResourcePaths());
