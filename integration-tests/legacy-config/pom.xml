@@ -4,7 +4,7 @@
     <parent>
         <groupId>io.quarkiverse.freemarker</groupId>
         <artifactId>quarkus-freemarker-integration-tests</artifactId>
-        <version>0.3.0-SNAPSHOT</version>
+        <version>0.2.5</version>
     </parent>
 
     <artifactId>quarkus-freemarker-integration-tests-legacy-config</artifactId>
