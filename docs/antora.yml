@@ -1,5 +1,5 @@
-name: quarkiverse-freemarker
-title: Quarkiverse Freemarker
+name: quarkus-freemarker
+title: Quarkus Freemarker
 version: dev
 nav:
 - modules/ROOT/nav.adoc
