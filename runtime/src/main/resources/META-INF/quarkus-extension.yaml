@@ -5,7 +5,7 @@ metadata:
   keywords:
     - "freemarker"
     - "template"
-  guide: "https://quarkus.io/guides/freemarker"
+  guide: "https://quarkiverse.github.io/quarkiverse-docs/quarkus-freemarker/dev/"
   categories:
     - "miscellaneous"
   status: "preview"
