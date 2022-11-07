@@ -25,7 +25,7 @@ public class FreemarkerConfig {
 
     /**
      * Sets how errors will appear. rethrow, debug, html-debug, ignore.
-     * 
+     *
      * @see freemarker.template.Configuration#setTemplateExceptionHandler(TemplateExceptionHandler)
      */
     @ConfigItem
@@ -33,7 +33,7 @@ public class FreemarkerConfig {
 
     /**
      * If false, don't log exceptions inside FreeMarker that it will be thrown at you anyway.
-     * 
+     *
      * @see freemarker.template.Configuration#setLogTemplateExceptions(boolean)
      */
     @ConfigItem
@@ -41,7 +41,7 @@ public class FreemarkerConfig {
 
     /**
      * Wrap unchecked exceptions thrown during template processing into TemplateException-s.
-     * 
+     *
      * @see freemarker.template.Configuration#setWrapUncheckedExceptions(boolean)
      */
     @ConfigItem
@@ -49,7 +49,7 @@ public class FreemarkerConfig {
 
     /**
      * If false, do not fall back to higher scopes when reading a null loop variable.
-     * 
+     *
      * @see freemarker.template.Configuration#setFallbackOnNullLoopVariable(boolean)
      */
     @ConfigItem
@@ -58,7 +58,7 @@ public class FreemarkerConfig {
     /**
      * The string value for the boolean {@code true} and {@code false} values, usually intended for human consumption (not for a
      * computer language), separated with comma.
-     * 
+     *
      * @see freemarker.template.Configuration#setBooleanFormat(String)
      */
     @ConfigItem
@@ -66,7 +66,7 @@ public class FreemarkerConfig {
 
     /**
      * Sets the default number format used to convert numbers to strings.
-     * 
+     *
      * @see freemarker.template.Configuration#setNumberFormat(String)
      */
     @ConfigItem
@@ -74,7 +74,7 @@ public class FreemarkerConfig {
 
     /**
      * If true, the object wrapper will be configured to expose fields.
-     * 
+     *
      * @see freemarker.ext.beans.BeansWrapper#setExposeFields(boolean)
      */
     @ConfigItem

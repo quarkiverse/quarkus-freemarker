@@ -9,9 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.enterprise.inject.Produces;
-import javax.inject.Singleton;
-
 import org.jboss.logging.Logger;
 
 import freemarker.cache.ClassTemplateLoader;
@@ -23,6 +20,8 @@ import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateExceptionHandler;
 import io.quarkus.arc.DefaultBean;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class FreemarkerConfigurationProducer {
