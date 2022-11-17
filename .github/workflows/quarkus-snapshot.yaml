@@ -10,8 +10,6 @@ env:
   ECOSYSTEM_CI_REPO: quarkusio/quarkus-ecosystem-ci
   ECOSYSTEM_CI_REPO_FILE: context.yaml
   JAVA_VERSION: 11
-  # Remove the line below when the 3.x branch is merged back in the main branch in quarkusio/quarkus
-  ALTERNATIVE: "3.0"
   
   #########################
   # Repo specific setting #
