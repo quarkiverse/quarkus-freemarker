@@ -7,15 +7,16 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
-import io.quarkiverse.freemarker.TemplatePath;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
+
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import io.quarkiverse.freemarker.TemplatePath;
 
 @Path("/freemarker")
 public class FreemarkerTestResource {

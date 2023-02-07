@@ -3,13 +3,14 @@ package io.quarkiverse.freemarker.runtime;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import io.quarkiverse.freemarker.TemplatePath;
 import jakarta.enterprise.inject.Produces;
 import jakarta.enterprise.inject.spi.InjectionPoint;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import io.quarkiverse.freemarker.TemplatePath;
 
 @Singleton
 public class FreemarkerTemplateProducer {
