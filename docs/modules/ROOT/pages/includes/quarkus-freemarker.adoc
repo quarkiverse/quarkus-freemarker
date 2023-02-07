@@ -1,0 +1,312 @@
+
+:summaryTableId: quarkus-freemarker
+[.configuration-legend]
+icon:lock[title=Fixed at build time] Configuration property fixed at build time - All other configuration properties are overridable at runtime
+[.configuration-reference.searchable, cols="80,.^10,.^10"]
+|===
+
+h|[[quarkus-freemarker_configuration]]link:#quarkus-freemarker_configuration[Configuration property]
+
+h|Type
+h|Default
+
+a|icon:lock[title=Fixed at build time] [[quarkus-freemarker_quarkus.freemarker.resource-paths]]`link:#quarkus-freemarker_quarkus.freemarker.resource-paths[quarkus.freemarker.resource-paths]`
+
+[.description]
+--
+Comma-separated list of absolute resource paths to scan recursively for templates. All tree folder from 'resource-paths' will be added as a resource. Unprefixed locations or locations starting with classpath will be processed in the same way. 
+Defaults relevant for this option are documented on `quarkus.freemarker.base-path`
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_RESOURCE_PATHS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_RESOURCE_PATHS+++`
+endif::add-copy-button-to-env-var[]
+--|list of string 
+|
+
+
+a|icon:lock[title=Fixed at build time] [[quarkus-freemarker_quarkus.freemarker.base-path]]`link:#quarkus-freemarker_quarkus.freemarker.base-path[quarkus.freemarker.base-path]`
+
+[.description]
+--
+The base path of this template set. Template set is a triple of `base-path`, `includes` and `excludes` serving to select a number of templates for inclusion in the native image. `includes` and `excludes` are relative to `base-path`. 
+Use slash (`/`) as a path separator on all platforms. The value must not start with a slash. 
+Do not set any `base-path` value if you want `includes` and `excludes` to be relative to root resource path. Defaults   Option Default value in case none of 
+`quarkus.freemarker.++[++base-path++\|++includes++\|++excludes++\|++resource-paths++]++`
+is set Default value otherwise   `quarkus.freemarker.base-path` `freemarker/templates` not set (interpreted as root resource path folder)   `quarkus.freemarker.includes` `++**++` not set (no files included)   `quarkus.freemarker.excludes` not set (no files excluded) not set (no files excluded)   
+The defaults described in the second column of the table are to achieve the backwards compatibility with the behavior of `quarkus.freemarker.resource-paths` before Quarkus Freemarker 0.2.0. 
+Allowed combinations 
+Setting `base-path` and/or `excludes` but not setting `includes` will result in a build time error. We have chosen this behavior (rather than using `++**++` as a default for includes) to avoid including all resources inadvertently and thus bloating your native image.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_BASE_PATH+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_BASE_PATH+++`
+endif::add-copy-button-to-env-var[]
+--|string 
+|
+
+
+a|icon:lock[title=Fixed at build time] [[quarkus-freemarker_quarkus.freemarker.includes]]`link:#quarkus-freemarker_quarkus.freemarker.includes[quarkus.freemarker.includes]`
+
+[.description]
+--
+A comma separated list of globs to select FreeMarker templates for inclusion in the native image. 
+`includes` are relative to `base-path`. Use slash (`/`) as a path separator on all platforms. The glob syntax is documented on `quarkus.native.resources.includes`. 
+Example: quarkus.freemarker.includes = ++**++.ftl
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_INCLUDES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_INCLUDES+++`
+endif::add-copy-button-to-env-var[]
+--|list of string 
+|
+
+
+a|icon:lock[title=Fixed at build time] [[quarkus-freemarker_quarkus.freemarker.excludes]]`link:#quarkus-freemarker_quarkus.freemarker.excludes[quarkus.freemarker.excludes]`
+
+[.description]
+--
+A comma separated list of globs not to include in the native image. 
+`excludes` are relative to `base-path`. Use slash (`/`) as a path separator on all platforms. The glob syntax is documented on `quarkus.native.resources.includes`. 
+Example: quarkus.freemarker.excludes = ++**++/unwanted++*++
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_EXCLUDES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_EXCLUDES+++`
+endif::add-copy-button-to-env-var[]
+--|list of string 
+|
+
+
+a| [[quarkus-freemarker_quarkus.freemarker.file-paths]]`link:#quarkus-freemarker_quarkus.freemarker.file-paths[quarkus.freemarker.file-paths]`
+
+[.description]
+--
+Comma-separated of file system paths where freemarker templates are located
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_FILE_PATHS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_FILE_PATHS+++`
+endif::add-copy-button-to-env-var[]
+--|list of string 
+|
+
+
+a| [[quarkus-freemarker_quarkus.freemarker.default-encoding]]`link:#quarkus-freemarker_quarkus.freemarker.default-encoding[quarkus.freemarker.default-encoding]`
+
+[.description]
+--
+Set the preferred charset template files are stored in.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_DEFAULT_ENCODING+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_DEFAULT_ENCODING+++`
+endif::add-copy-button-to-env-var[]
+--|string 
+|
+
+
+a| [[quarkus-freemarker_quarkus.freemarker.template-exception-handler]]`link:#quarkus-freemarker_quarkus.freemarker.template-exception-handler[quarkus.freemarker.template-exception-handler]`
+
+[.description]
+--
+Sets how errors will appear. rethrow, debug, html-debug, ignore.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_TEMPLATE_EXCEPTION_HANDLER+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_TEMPLATE_EXCEPTION_HANDLER+++`
+endif::add-copy-button-to-env-var[]
+--|string 
+|
+
+
+a| [[quarkus-freemarker_quarkus.freemarker.log-template-exceptions]]`link:#quarkus-freemarker_quarkus.freemarker.log-template-exceptions[quarkus.freemarker.log-template-exceptions]`
+
+[.description]
+--
+If false, don't log exceptions inside FreeMarker that it will be thrown at you anyway.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_LOG_TEMPLATE_EXCEPTIONS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_LOG_TEMPLATE_EXCEPTIONS+++`
+endif::add-copy-button-to-env-var[]
+--|boolean 
+|
+
+
+a| [[quarkus-freemarker_quarkus.freemarker.wrap-unchecked-exceptions]]`link:#quarkus-freemarker_quarkus.freemarker.wrap-unchecked-exceptions[quarkus.freemarker.wrap-unchecked-exceptions]`
+
+[.description]
+--
+Wrap unchecked exceptions thrown during template processing into TemplateException-s.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_WRAP_UNCHECKED_EXCEPTIONS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_WRAP_UNCHECKED_EXCEPTIONS+++`
+endif::add-copy-button-to-env-var[]
+--|boolean 
+|
+
+
+a| [[quarkus-freemarker_quarkus.freemarker.fallback-on-null-loop-variable]]`link:#quarkus-freemarker_quarkus.freemarker.fallback-on-null-loop-variable[quarkus.freemarker.fallback-on-null-loop-variable]`
+
+[.description]
+--
+If false, do not fall back to higher scopes when reading a null loop variable.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_FALLBACK_ON_NULL_LOOP_VARIABLE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_FALLBACK_ON_NULL_LOOP_VARIABLE+++`
+endif::add-copy-button-to-env-var[]
+--|boolean 
+|
+
+
+a| [[quarkus-freemarker_quarkus.freemarker.boolean-format]]`link:#quarkus-freemarker_quarkus.freemarker.boolean-format[quarkus.freemarker.boolean-format]`
+
+[.description]
+--
+The string value for the boolean `true` and `false` values, usually intended for human consumption (not for a computer language), separated with comma.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_BOOLEAN_FORMAT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_BOOLEAN_FORMAT+++`
+endif::add-copy-button-to-env-var[]
+--|string 
+|
+
+
+a| [[quarkus-freemarker_quarkus.freemarker.number-format]]`link:#quarkus-freemarker_quarkus.freemarker.number-format[quarkus.freemarker.number-format]`
+
+[.description]
+--
+Sets the default number format used to convert numbers to strings.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_NUMBER_FORMAT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_NUMBER_FORMAT+++`
+endif::add-copy-button-to-env-var[]
+--|string 
+|
+
+
+a| [[quarkus-freemarker_quarkus.freemarker.object-wrapper-expose-fields]]`link:#quarkus-freemarker_quarkus.freemarker.object-wrapper-expose-fields[quarkus.freemarker.object-wrapper-expose-fields]`
+
+[.description]
+--
+If true, the object wrapper will be configured to expose fields.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_OBJECT_WRAPPER_EXPOSE_FIELDS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_OBJECT_WRAPPER_EXPOSE_FIELDS+++`
+endif::add-copy-button-to-env-var[]
+--|boolean 
+|
+
+
+a|icon:lock[title=Fixed at build time] [[quarkus-freemarker_quarkus.freemarker.directives-directives]]`link:#quarkus-freemarker_quarkus.freemarker.directives-directives[quarkus.freemarker.directives]`
+
+[.description]
+--
+List of directives to register with format name=classname
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_DIRECTIVES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_DIRECTIVES+++`
+endif::add-copy-button-to-env-var[]
+--|`Map<String,String>` 
+|
+
+
+h|[[quarkus-freemarker_quarkus.freemarker.named-template-sets-additional-named-template-sets]]link:#quarkus-freemarker_quarkus.freemarker.named-template-sets-additional-named-template-sets[Additional named template sets]
+
+h|Type
+h|Default
+
+a|icon:lock[title=Fixed at build time] [[quarkus-freemarker_quarkus.freemarker.-template-set-name-.base-path]]`link:#quarkus-freemarker_quarkus.freemarker.-template-set-name-.base-path[quarkus.freemarker."template-set-name".base-path]`
+
+[.description]
+--
+The base path of this template set. Template set is a triple of `base-path`, `includes` and `excludes` serving to select a number of templates for inclusion in the native image. `includes` and `excludes` are relative to `base-path`. 
+Use slash (`/`) as a path separator on all platforms. The value must not start with a slash. 
+Do not set any `base-path` value if you want `includes` and `excludes` to be relative to root resource path. Defaults   Option Default value in case none of 
+`quarkus.freemarker.++[++base-path++\|++includes++\|++excludes++\|++resource-paths++]++`
+is set Default value otherwise   `quarkus.freemarker.base-path` `freemarker/templates` not set (interpreted as root resource path folder)   `quarkus.freemarker.includes` `++**++` not set (no files included)   `quarkus.freemarker.excludes` not set (no files excluded) not set (no files excluded)   
+The defaults described in the second column of the table are to achieve the backwards compatibility with the behavior of `quarkus.freemarker.resource-paths` before Quarkus Freemarker 0.2.0. 
+Allowed combinations 
+Setting `base-path` and/or `excludes` but not setting `includes` will result in a build time error. We have chosen this behavior (rather than using `++**++` as a default for includes) to avoid including all resources inadvertently and thus bloating your native image.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER__TEMPLATE_SET_NAME__BASE_PATH+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER__TEMPLATE_SET_NAME__BASE_PATH+++`
+endif::add-copy-button-to-env-var[]
+--|string 
+|
+
+
+a|icon:lock[title=Fixed at build time] [[quarkus-freemarker_quarkus.freemarker.-template-set-name-.includes]]`link:#quarkus-freemarker_quarkus.freemarker.-template-set-name-.includes[quarkus.freemarker."template-set-name".includes]`
+
+[.description]
+--
+A comma separated list of globs to select FreeMarker templates for inclusion in the native image. 
+`includes` are relative to `base-path`. Use slash (`/`) as a path separator on all platforms. The glob syntax is documented on `quarkus.native.resources.includes`. 
+Example: quarkus.freemarker.includes = ++**++.ftl
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER__TEMPLATE_SET_NAME__INCLUDES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER__TEMPLATE_SET_NAME__INCLUDES+++`
+endif::add-copy-button-to-env-var[]
+--|list of string 
+|
+
+
+a|icon:lock[title=Fixed at build time] [[quarkus-freemarker_quarkus.freemarker.-template-set-name-.excludes]]`link:#quarkus-freemarker_quarkus.freemarker.-template-set-name-.excludes[quarkus.freemarker."template-set-name".excludes]`
+
+[.description]
+--
+A comma separated list of globs not to include in the native image. 
+`excludes` are relative to `base-path`. Use slash (`/`) as a path separator on all platforms. The glob syntax is documented on `quarkus.native.resources.includes`. 
+Example: quarkus.freemarker.excludes = ++**++/unwanted++*++
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER__TEMPLATE_SET_NAME__EXCLUDES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER__TEMPLATE_SET_NAME__EXCLUDES+++`
+endif::add-copy-button-to-env-var[]
+--|list of string 
+|
+
+|===
