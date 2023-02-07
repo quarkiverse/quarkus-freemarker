@@ -1,9 +1,7 @@
-////
-This guide is maintained in the main Quarkus repository
-and pull requests should be submitted there:
-https://github.com/quarkusio/quarkus/tree/master/docs/src/main/asciidoc
-////
-= Freemarker Templating Engine
+= Quarkus Freemarker
+
+include::./includes/attributes.adoc[]
+
 :extension-status: preview
 
 Freemarker is a very popular and mature templating engine. Its integration as a Quarkus extension
@@ -20,6 +18,7 @@ In your `pom.xml` file, add:
 <dependency>
     <groupId>io.quarkiverse</groupId>
     <artifactId>quarkiverse-freemarker</artifactId>
+    <version>{project-version}</version>
 </dependency>
 ----
 
@@ -87,10 +86,10 @@ can be obtained programmatically. The `Configuration` is a `Singleton`
 The default `Configuration` bean is configured from quarkus exposed
 properties. Among those, 2 are build time:
 
- - `resource-paths` is a list of resource paths contained in the classpath (e.g.
+- `resource-paths` is a list of resource paths contained in the classpath (e.g.
 typically in jars of the application). Each path is traversed recursively, and
 all files get added as native resources when building a native image.
- - `directives` is a map of _directive alias_ to _directive class name_. Each directive
+- `directives` is a map of _directive alias_ to _directive class name_. Each directive
 class is added as a shared variable in the `Configuration` bean.
 
 Here is an example of using a `Configuration` bean instead of a `Template` bean:
@@ -161,7 +160,8 @@ do not have getters.
 Additionnaly, they should be annotated with
 `@RegisterForReflection` to support native images.
 
-[[freemarker-configuration-reference]]
-== Freemarker Configuration Reference
 
-include::config.adoc[leveloffset=+1, opts=optional]
+[[extension-configuration-reference]]
+== Extension Configuration Reference
+
+include::includes/quarkus-freemarker.adoc[leveloffset=+1, opts=optional]
