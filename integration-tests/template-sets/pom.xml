@@ -8,7 +8,7 @@
     </parent>
 
     <artifactId>quarkus-freemarker-integration-tests-template-sets</artifactId>
-    <name>Quarkus - Freemarker - Integration Tests - Template sets</name>
+    <name>Quarkus Freemarker - Integration Tests - Template sets</name>
 
     <dependencies>
         <dependency>

@@ -8,7 +8,7 @@
     </parent>
 
     <artifactId>quarkus-freemarker-integration-tests-legacy-config</artifactId>
-    <name>Quarkus - Freemarker - Integration Tests - Legacy configuration</name>
+    <name>Quarkus Freemarker - Integration Tests - Legacy configuration</name>
 
     <dependencies>
         <dependency>
