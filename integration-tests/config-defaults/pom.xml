@@ -8,7 +8,7 @@
     </parent>
 
     <artifactId>quarkus-freemarker-integration-tests-config-defaults</artifactId>
-    <name>Quarkus - Freemarker - Integration Tests - Configuration defaults</name>
+    <name>Quarkus Freemarker - Integration Tests - Configuration defaults</name>
 
     <dependencies>
         <dependency>
