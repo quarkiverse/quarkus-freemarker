@@ -72,7 +72,7 @@ a|icon:lock[title=Fixed at build time] [[quarkus-freemarker_quarkus.freemarker.e
 
 [.description]
 --
-A comma separated list of globs not to include in the native image. 
+A comma separated list of globs *not* to include in the native image. 
 `excludes` are relative to `base-path`. Use slash (`/`) as a path separator on all platforms. The glob syntax is documented on `quarkus.native.resources.includes`. 
 Example: quarkus.freemarker.excludes = ++**++/unwanted++*++
 
@@ -296,7 +296,7 @@ a|icon:lock[title=Fixed at build time] [[quarkus-freemarker_quarkus.freemarker.-
 
 [.description]
 --
-A comma separated list of globs not to include in the native image. 
+A comma separated list of globs *not* to include in the native image. 
 `excludes` are relative to `base-path`. Use slash (`/`) as a path separator on all platforms. The glob syntax is documented on `quarkus.native.resources.includes`. 
 Example: quarkus.freemarker.excludes = ++**++/unwanted++*++
 
