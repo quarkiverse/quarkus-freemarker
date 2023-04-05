@@ -15,12 +15,12 @@ public class FreemarkerDevUIProcessor {
 
     @BuildStep(onlyIf = IsDevelopment.class)
     void createVersion(BuildProducer<CardPageBuildItem> cardPageBuildItemBuildProducer) {
-        final CardPageBuildItem card = new CardPageBuildItem("Freemarker");
+        final CardPageBuildItem card = new CardPageBuildItem();
 
         final PageBuilder versionPage = Page.externalPageBuilder("Version")
                 .icon("font-awesome-solid:code")
                 .url("https://freemarker.apache.org/")
-                .isHtmlContent()
+                .doNotEmbed()
                 .staticLabel(Configuration.class.getPackage().getImplementationVersion());
         card.addPage(versionPage);
 
