@@ -6,6 +6,7 @@ metadata:
     - "freemarker"
     - "template"
   guide: "https://quarkiverse.github.io/quarkiverse-docs/quarkus-freemarker/dev/"
+  icon-url: "https://www.apache.org/foundation/press/kit/poweredBy/Apache_PoweredBy.svg"
   categories:
     - "miscellaneous"
   status: "preview"
