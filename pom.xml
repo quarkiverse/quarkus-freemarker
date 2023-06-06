@@ -22,7 +22,7 @@
     <freemarker.version>2.3.32</freemarker.version>
   </properties>
   <scm>
-    <connection>:git:git@github.com:quarkiverse/quarkus-freemarker.git</connection>
+    <connection>scm:git:git@github.com:quarkiverse/quarkus-freemarker.git</connection>
     <developerConnection>scm:git:git@github.com:quarkiverse/quarkus-freemarker.git</developerConnection>
     <url>https://github.com/quarkiverse/quarkus-freemarker</url>
   </scm>
