@@ -1,5 +1,5 @@
 name: quarkus-freemarker
-title: Quarkus Freemarker
+title: Freemarker
 version: dev
 nav:
   - modules/ROOT/nav.adoc
