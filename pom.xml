@@ -19,7 +19,7 @@
     <maven.compiler.parameters>true</maven.compiler.parameters>
     <quarkus.version>3.11.0</quarkus.version>
     <compiler.plugin.version>3.8.1</compiler.plugin.version>
-    <freemarker.version>2.3.32</freemarker.version>
+    <freemarker.version>2.3.33</freemarker.version>
   </properties>
   <scm>
     <connection>scm:git:git@github.com:quarkiverse/quarkus-freemarker.git</connection>
