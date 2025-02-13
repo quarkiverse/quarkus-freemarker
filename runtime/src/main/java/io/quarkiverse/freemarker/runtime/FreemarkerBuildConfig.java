@@ -11,12 +11,14 @@ import freemarker.template.TemplateModel;
 import io.quarkus.runtime.annotations.ConfigDocMapKey;
 import io.quarkus.runtime.annotations.ConfigDocSection;
 import io.quarkus.runtime.annotations.ConfigGroup;
-import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
+import io.smallrye.config.ConfigMapping;
+import io.smallrye.config.WithParentName;
 
-@ConfigRoot(name = "freemarker", phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
-public class FreemarkerBuildConfig {
+@ConfigRoot(phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
+@ConfigMapping(prefix = "quarkus.freemarker")
+public interface FreemarkerBuildConfig {
 
     /**
      * Comma-separated list of absolute resource paths to scan recursively for templates.
@@ -29,33 +31,31 @@ public class FreemarkerBuildConfig {
      *             {@code quarkus.freemarker.<template-set-name>.includes} and
      *             {@code quarkus.freemarker.<template-set-name>.excludes})
      */
-    @ConfigItem
-    public Optional<List<String>> resourcePaths;
+    Optional<List<String>> resourcePaths();
 
     /**
      * List of directives to register with format name=classname
      *
      * @see freemarker.template.Configuration#setSharedVariable(String, TemplateModel)
      */
-    @ConfigItem
-    public Map<String, String> directives;
+    Map<String, String> directives();
 
     /**
      * The default template set
      */
-    @ConfigItem(name = ConfigItem.PARENT)
-    public TemplateSet defaultTemplateSet;
+    @WithParentName
+    TemplateSet defaultTemplateSet();
 
     /**
      * Additional named template sets.
      */
     @ConfigDocSection
     @ConfigDocMapKey("template-set-name")
-    @ConfigItem(name = ConfigItem.PARENT)
-    public Map<String, TemplateSet> namedTemplateSets;
+    @WithParentName
+    Map<String, TemplateSet> namedTemplateSets();
 
     @ConfigGroup
-    public static class TemplateSet {
+    public interface TemplateSet {
         /**
          * The base path of this template set. Template set is a triple of {@code base-path}, {@code includes} and
          * {@code excludes} serving to select a number of templates for inclusion in the native image.
@@ -102,8 +102,7 @@ public class FreemarkerBuildConfig {
          *
          * @since 0.2.0
          */
-        @ConfigItem
-        public Optional<String> basePath;
+        Optional<String> basePath();
 
         /**
          * A comma separated list of globs to select FreeMarker templates for inclusion in the native image.
@@ -119,8 +118,7 @@ public class FreemarkerBuildConfig {
          *
          * @since 0.2.0
          */
-        @ConfigItem
-        public Optional<List<String>> includes;
+        Optional<List<String>> includes();
 
         /**
          * A comma separated list of globs <strong>not</strong> to include in the native image.
@@ -136,15 +134,14 @@ public class FreemarkerBuildConfig {
          *
          * @since 0.2.0
          */
-        @ConfigItem
-        public Optional<List<String>> excludes;
+        Optional<List<String>> excludes();
 
-        public TemplateSet assertValid(String key) {
-            if (!includes.isPresent()) {
+        default TemplateSet assertValid(String key) {
+            if (includes().isEmpty()) {
                 final String infix = key == null ? "" : "." + key;
                 final String badProps = Stream
-                        .of(new AbstractMap.SimpleImmutableEntry<String, Optional<?>>("base-path", basePath),
-                                new AbstractMap.SimpleImmutableEntry<String, Optional<?>>("excludes", excludes))
+                        .of(new AbstractMap.SimpleImmutableEntry<String, Optional<?>>("base-path", basePath()),
+                                new AbstractMap.SimpleImmutableEntry<String, Optional<?>>("excludes", excludes()))
                         .filter(entry -> entry.getValue().isPresent())
                         .map(AbstractMap.SimpleImmutableEntry::getKey)
                         .map(k -> "quarkus.freemarker" + infix + "." + k)
@@ -158,8 +155,8 @@ public class FreemarkerBuildConfig {
             return this;
         }
 
-        public boolean isSetByUser() {
-            return basePath.isPresent() || includes.isPresent() || excludes.isPresent();
+        default boolean isSetByUser() {
+            return basePath().isPresent() || includes().isPresent() || excludes().isPresent();
         }
     }
 

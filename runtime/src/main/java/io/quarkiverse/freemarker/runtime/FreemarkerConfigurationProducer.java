@@ -44,23 +44,23 @@ public class FreemarkerConfigurationProducer {
                 .map(this::newClassTemplateLoader)
                 .forEach(loaders::add);
 
-        LOGGER.debugf("Adding runtime locations: %s", config.filePaths.orElse(emptyList()));
-        loaders.addAll(config.filePaths.orElse(emptyList()).stream().map(this::newFileTemplateLoader).collect(toList()));
+        LOGGER.debugf("Adding runtime locations: %s", config.filePaths().orElse(emptyList()));
+        loaders.addAll(config.filePaths().orElse(emptyList()).stream().map(this::newFileTemplateLoader).collect(toList()));
 
         MultiTemplateLoader mtl = new MultiTemplateLoader(loaders.toArray(new TemplateLoader[0]));
         cfg.setTemplateLoader(mtl);
 
-        config.defaultEncoding.ifPresent(cfg::setDefaultEncoding);
-        config.templateExceptionHandler.ifPresent(s -> cfg.setTemplateExceptionHandler(getExceptionHandler(s)));
-        config.logTemplateExceptions.ifPresent(cfg::setLogTemplateExceptions);
-        config.wrapUncheckedExceptions.ifPresent(cfg::setWrapUncheckedExceptions);
-        config.fallbackOnNullLoopVariable.ifPresent(cfg::setFallbackOnNullLoopVariable);
-        config.booleanFormat.ifPresent(cfg::setBooleanFormat);
-        config.numberFormat.ifPresent(cfg::setNumberFormat);
+        config.defaultEncoding().ifPresent(cfg::setDefaultEncoding);
+        config.templateExceptionHandler().ifPresent(s -> cfg.setTemplateExceptionHandler(getExceptionHandler(s)));
+        config.logTemplateExceptions().ifPresent(cfg::setLogTemplateExceptions);
+        config.wrapUncheckedExceptions().ifPresent(cfg::setWrapUncheckedExceptions);
+        config.fallbackOnNullLoopVariable().ifPresent(cfg::setFallbackOnNullLoopVariable);
+        config.booleanFormat().ifPresent(cfg::setBooleanFormat);
+        config.numberFormat().ifPresent(cfg::setNumberFormat);
 
-        if (config.objectWrapperExposeFields.isPresent()) {
+        if (config.objectWrapperExposeFields().isPresent()) {
             DefaultObjectWrapper objectWrapper = new DefaultObjectWrapper(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
-            objectWrapper.setExposeFields(config.objectWrapperExposeFields.get());
+            objectWrapper.setExposeFields(config.objectWrapperExposeFields().get());
             cfg.setObjectWrapper(objectWrapper);
         }
 
