@@ -120,9 +120,10 @@ public class FreemarkerProcessor {
             FreemarkerBuildConfig config) {
 
         LOGGER.debugf("Adding directives: %s", config.directives().values());
-        config.directives().values().stream()
-                .map(classname -> new ReflectiveClassBuildItem(false, false, classname))
-                .forEach(reflectiveClassBuildItemProducer::produce);
+        reflectiveClassBuildItemProducer.produce(
+                ReflectiveClassBuildItem.builder(config.directives().values().toArray(new String[0]))
+                        .constructors()
+                        .build());
     }
 
     @BuildStep
