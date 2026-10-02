@@ -39,8 +39,8 @@ public class FreemarkerConfigurationProducer {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_33);
 
         List<TemplateLoader> loaders = new ArrayList<>();
-        LOGGER.debugf("Adding build time locations: %s", freemarkerBuildConfigSupport.getResourcePaths());
-        freemarkerBuildConfigSupport.getResourcePaths().stream()
+        LOGGER.debugf("Adding build time locations: %s", freemarkerBuildConfigSupport.getBasePaths());
+        freemarkerBuildConfigSupport.getBasePaths().stream()
                 .map(this::newClassTemplateLoader)
                 .forEach(loaders::add);
 

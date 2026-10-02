@@ -5,16 +5,16 @@ import java.util.Map;
 
 public class FreemarkerBuildConfigSupport {
 
-    private final List<String> resourcePaths;
+    private final List<String> basePaths;
     private final Map<String, String> directives;
 
-    public FreemarkerBuildConfigSupport(List<String> resourcePaths, Map<String, String> directives) {
-        this.resourcePaths = resourcePaths;
+    public FreemarkerBuildConfigSupport(List<String> basePaths, Map<String, String> directives) {
+        this.basePaths = basePaths;
         this.directives = directives;
     }
 
-    public List<String> getResourcePaths() {
-        return resourcePaths;
+    public List<String> getBasePaths() {
+        return basePaths;
     }
 
     public Map<String, String> getDirectives() {

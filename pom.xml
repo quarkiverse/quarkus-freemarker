@@ -14,10 +14,9 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
+    <maven.compiler.release>21</maven.compiler.release>
     <maven.compiler.parameters>true</maven.compiler.parameters>
-    <quarkus.version>3.40.0</quarkus.version>
+    <quarkus.version>4.0.0.Beta1</quarkus.version>
     <compiler.plugin.version>3.16.0</compiler.plugin.version>
     <freemarker.version>2.3.35</freemarker.version>
   </properties>
@@ -58,6 +57,12 @@
         <plugin>
           <groupId>io.quarkus</groupId>
           <artifactId>quarkus-maven-plugin</artifactId>
+          <version>${quarkus.version}</version>
+          <extensions>true</extensions>
+        </plugin>
+        <plugin>
+          <groupId>io.quarkus</groupId>
+          <artifactId>quarkus-config-doc-maven-plugin</artifactId>
           <version>${quarkus.version}</version>
         </plugin>
       </plugins>
