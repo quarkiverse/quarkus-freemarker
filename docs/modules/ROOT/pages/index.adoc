@@ -86,9 +86,14 @@ can be obtained programmatically. The `Configuration` is a `Singleton`
 The default `Configuration` bean is configured from quarkus exposed
 properties. Among those, 2 are build time:
 
-- `resource-paths` is a list of resource paths contained in the classpath (e.g.
-typically in jars of the application). Each path is traversed recursively, and
-all files get added as native resources when building a native image.
+- template sets select the templates contained in the classpath (e.g.
+typically in jars of the application). A template set is a pair of `base-path` and
+`includes` globs relative to it: the base path is used to look up templates, and the
+matching files get added as native resources when building a native image.
+The default template set is configured with `quarkus.freemarker.base-path` and
+`quarkus.freemarker.includes`, and additional ones with
+`quarkus.freemarker."template-set-name".base-path` and
+`quarkus.freemarker."template-set-name".includes`.
 - `directives` is a map of _directive alias_ to _directive class name_. Each directive
 class is added as a shared variable in the `Configuration` bean.
 

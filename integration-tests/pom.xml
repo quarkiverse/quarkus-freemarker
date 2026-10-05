@@ -19,7 +19,7 @@
 
     <modules>
         <module>config-defaults</module>
-        <module>legacy-config</module>
+        <module>features</module>
         <module>template-sets</module>
     </modules>
 </project>

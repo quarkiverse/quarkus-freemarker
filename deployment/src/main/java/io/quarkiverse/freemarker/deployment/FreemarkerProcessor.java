@@ -36,8 +36,6 @@ public class FreemarkerProcessor {
 
     private static final String FEATURE = "freemarker";
 
-    private static final String CLASSPATH_PROTOCOL = "classpath";
-
     @BuildStep
     FeatureBuildItem feature() {
         return new FeatureBuildItem(FEATURE);
@@ -52,28 +50,14 @@ public class FreemarkerProcessor {
                 .forEach(runtimeInitialized::produce);
     }
 
-    @SuppressWarnings("deprecation")
     @BuildStep
     void discoverTemplates(BuildProducer<TemplateSetBuildItem> templateSets, FreemarkerBuildConfig config) {
 
-        if (config.resourcePaths().isPresent()) {
-            for (String basePath : config.resourcePaths().get()) {
-                // Strip any 'classpath:' protocol prefixes because they are assumed
-                // but not recognized by ClassLoader.getResources()
-                if (basePath.startsWith(CLASSPATH_PROTOCOL + ':')) {
-                    basePath = basePath.substring(CLASSPATH_PROTOCOL.length() + 1);
-                }
-                templateSets.produce(TemplateSetBuildItem.builder().basePath(basePath).includeGlob("**").build());
-            }
-        }
-
-        if (!config.resourcePaths().isPresent() && !config.defaultTemplateSet().isSetByUser()) {
-            /* produce the default */
-            templateSets.produce(TemplateSetBuildItem.builder().basePath("freemarker/templates").includeGlob("**").build());
-        }
-
         if (config.defaultTemplateSet().isSetByUser()) {
             templateSets.produce(toBuildItem(config.defaultTemplateSet().assertValid(null)));
+        } else {
+            /* produce the default */
+            templateSets.produce(TemplateSetBuildItem.builder().basePath("freemarker/templates").includeGlob("**").build());
         }
 
         for (Map.Entry<String, TemplateSet> entry : config.namedTemplateSets().entrySet()) {
@@ -86,7 +70,6 @@ public class FreemarkerProcessor {
 
         templateSet.basePath().ifPresent(builder::basePath);
         templateSet.includes().ifPresent(builder::includeGlobs);
-        templateSet.excludes().ifPresent(builder::excludeGlobs);
 
         return builder.build();
     }
@@ -100,9 +83,6 @@ public class FreemarkerProcessor {
             templateSet.getIncludeGlobs().stream()
                     .map(templateSet::resolve)
                     .forEach(builder::includeGlob);
-            templateSet.getExcludeGlobs().stream()
-                    .map(templateSet::resolve)
-                    .forEach(builder::excludeGlob);
             nativeImageResources.produce(builder.build());
         }
     }
@@ -131,14 +111,14 @@ public class FreemarkerProcessor {
     SyntheticBeanBuildItem pushConfigurationBean(FreemarkerRecorder recorder,
             List<TemplateSetBuildItem> templateSets,
             FreemarkerBuildConfig buildConfig) {
-        final List<String> resourcePaths = templateSets.stream()
+        final List<String> basePaths = templateSets.stream()
                 .map(TemplateSetBuildItem::getBasePath)
                 .map(basePath -> basePath.orElse(""))
                 .collect(Collectors.toList());
 
         return SyntheticBeanBuildItem.configure(FreemarkerBuildConfigSupport.class)
                 .scope(Singleton.class)
-                .supplier(recorder.freemarkerBuildConfigSupport(resourcePaths, buildConfig.directives()))
+                .supplier(recorder.freemarkerBuildConfigSupport(basePaths, buildConfig.directives()))
                 .done();
     }
 }

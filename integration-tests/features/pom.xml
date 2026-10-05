@@ -7,8 +7,8 @@
         <version>999-SNAPSHOT</version>
     </parent>
 
-    <artifactId>quarkus-freemarker-integration-tests-legacy-config</artifactId>
-    <name>Quarkus Freemarker - Integration Tests - Legacy configuration</name>
+    <artifactId>quarkus-freemarker-integration-tests-features</artifactId>
+    <name>Quarkus Freemarker - Integration Tests - Features</name>
 
     <dependencies>
         <dependency>
@@ -23,12 +23,12 @@
 
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-junit5-internal</artifactId>
+            <artifactId>quarkus-junit-internal</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-junit5</artifactId>
+            <artifactId>quarkus-junit</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -110,7 +110,8 @@
                 </plugins>
             </build>
             <properties>
-                <quarkus.package.type>native</quarkus.package.type>
+                <quarkus.package.jar.enabled>false</quarkus.package.jar.enabled>
+                <quarkus.native.enabled>true</quarkus.native.enabled>
             </properties>
         </profile>
     </profiles>

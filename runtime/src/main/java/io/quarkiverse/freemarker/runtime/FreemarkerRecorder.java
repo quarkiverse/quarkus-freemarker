@@ -9,12 +9,12 @@ import io.quarkus.runtime.annotations.Recorder;
 @Recorder
 public class FreemarkerRecorder {
 
-    public Supplier<FreemarkerBuildConfigSupport> freemarkerBuildConfigSupport(List<String> resourcePaths,
+    public Supplier<FreemarkerBuildConfigSupport> freemarkerBuildConfigSupport(List<String> basePaths,
             Map<String, String> directives) {
         return new Supplier<FreemarkerBuildConfigSupport>() {
             @Override
             public FreemarkerBuildConfigSupport get() {
-                return new FreemarkerBuildConfigSupport(resourcePaths, directives);
+                return new FreemarkerBuildConfigSupport(basePaths, directives);
             }
         };
     }
