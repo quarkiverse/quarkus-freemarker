@@ -9,7 +9,7 @@
   <groupId>io.quarkiverse.freemarker</groupId>
   <artifactId>quarkus-freemarker-parent</artifactId>
   <name>Quarkus Freemarker - Parent</name>
-  <version>2.0.0.Beta1</version>
+  <version>999-SNAPSHOT</version>
   <packaging>pom</packaging>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,7 +24,7 @@
     <connection>scm:git:git@github.com:quarkiverse/quarkus-freemarker.git</connection>
     <developerConnection>scm:git:git@github.com:quarkiverse/quarkus-freemarker.git</developerConnection>
     <url>https://github.com/quarkiverse/quarkus-freemarker</url>
-    <tag>2.0.0.Beta1</tag>
+    <tag>HEAD</tag>
   </scm>
   <modules>
     <module>deployment</module>
