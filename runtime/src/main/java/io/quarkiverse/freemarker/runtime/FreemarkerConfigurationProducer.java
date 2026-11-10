@@ -5,9 +5,13 @@ import static java.util.stream.Collectors.toList;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.time.DateTimeException;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Singleton;
@@ -21,6 +25,7 @@ import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.TemplateDirectiveModel;
+import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 import io.quarkus.arc.DefaultBean;
 
@@ -34,7 +39,8 @@ public class FreemarkerConfigurationProducer {
     @Produces
     public Configuration configuration(FreemarkerBuildConfigSupport freemarkerBuildConfigSupport,
             FreemarkerConfig config)
-            throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+            throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException,
+            InvocationTargetException {
 
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_33);
 
@@ -57,6 +63,15 @@ public class FreemarkerConfigurationProducer {
         config.fallbackOnNullLoopVariable().ifPresent(cfg::setFallbackOnNullLoopVariable);
         config.booleanFormat().ifPresent(cfg::setBooleanFormat);
         config.numberFormat().ifPresent(cfg::setNumberFormat);
+        config.locale().ifPresent(cfg::setLocale);
+        config.timeZone().ifPresent(tz -> cfg.setTimeZone(toTimeZone("time-zone", tz)));
+        config.sqlDateAndTimeTimeZone()
+                .ifPresent(tz -> cfg.setSQLDateAndTimeTimeZone(toTimeZone("sql-date-and-time-time-zone", tz)));
+        config.dateFormat().ifPresent(cfg::setDateFormat);
+        config.timeFormat().ifPresent(cfg::setTimeFormat);
+        config.datetimeFormat().ifPresent(cfg::setDateTimeFormat);
+        config.outputEncoding().ifPresent(cfg::setOutputEncoding);
+        config.urlEscapingCharset().ifPresent(cfg::setURLEscapingCharset);
 
         if (config.objectWrapperExposeFields().isPresent()) {
             DefaultObjectWrapper objectWrapper = new DefaultObjectWrapper(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
@@ -64,12 +79,30 @@ public class FreemarkerConfigurationProducer {
             cfg.setObjectWrapper(objectWrapper);
         }
 
+        for (Map.Entry<String, String> setting : config.settings().entrySet()) {
+            try {
+                cfg.setSetting(setting.getKey(), setting.getValue());
+            } catch (TemplateException e) {
+                throw new IllegalArgumentException("Invalid value for FreeMarker setting quarkus.freemarker.settings.\""
+                        + setting.getKey() + "\": " + e.getMessage(), e);
+            }
+        }
+
         for (Map.Entry<String, String> directive : freemarkerBuildConfigSupport.getDirectives().entrySet()) {
             Class<?> directiveClass = Thread.currentThread().getContextClassLoader().loadClass(directive.getValue());
-            cfg.setSharedVariable(directive.getKey(), (TemplateDirectiveModel) directiveClass.newInstance());
+            cfg.setSharedVariable(directive.getKey(),
+                    (TemplateDirectiveModel) directiveClass.getDeclaredConstructor().newInstance());
         }
 
         return cfg;
+    }
+
+    private TimeZone toTimeZone(String property, String value) {
+        try {
+            return TimeZone.getTimeZone(ZoneId.of(value.trim()));
+        } catch (DateTimeException e) {
+            throw new IllegalArgumentException("Invalid value for quarkus.freemarker." + property + ": " + value, e);
+        }
     }
 
     private TemplateExceptionHandler getExceptionHandler(String templateExceptionHandler) {
@@ -82,7 +115,8 @@ public class FreemarkerConfigurationProducer {
         } else if (templateExceptionHandler.equals("ignore")) {
             return TemplateExceptionHandler.IGNORE_HANDLER;
         } else {
-            return null;
+            throw new IllegalArgumentException("Invalid value for quarkus.freemarker.template-exception-handler: "
+                    + templateExceptionHandler + " (expected one of rethrow, debug, html-debug, ignore)");
         }
     }
 

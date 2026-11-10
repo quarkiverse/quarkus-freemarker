@@ -1,0 +1,1 @@
+${date?date}|${date?time}|${date?datetime}|${.locale}|${flag}|${text?url}
