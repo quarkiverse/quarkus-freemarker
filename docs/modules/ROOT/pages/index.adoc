@@ -116,6 +116,25 @@ The rest of the configuration properties can be provided at runtime, such as
 a list of external filesystem paths where to find additional templates,
 and optional properties that can be configured on the Freemarker `Configuration` class.
 
+== Dev mode
+
+In dev mode, changing a classpath template (i.e. a file matched by a template set, such as
+`src/main/resources/freemarker/templates/hello.ftl`) restarts the application, so that both
+injected `Template` beans and templates obtained from the `Configuration` bean pick up the change.
+
+Templates located in external `quarkus.freemarker.file-paths` directories are not watched by Quarkus,
+so changing them does not restart the application:
+
+- templates obtained programmatically through `Configuration.getTemplate(...)` are reloaded on the next call
+(in dev mode, Freemarker checks templates for changes on every lookup),
+- templates injected with `@TemplatePath` are not reloaded, since they are parsed once when the bean that
+injects them is created. Use `Configuration.getTemplate(...)` instead, or restart the application
+(e.g. by pressing `s` in the dev mode console).
+
+NOTE: Outside of dev mode, the same applies to external templates modified on disk while the application runs:
+injected `Template` beans are never reloaded, whereas `Configuration.getTemplate(...)` reloads a modified template
+after Freemarker's template update delay (5 seconds by default).
+
 == Directives
 
 Freemarker can be extended using custom directives. For instance if we wanted
