@@ -2,6 +2,7 @@ package io.quarkiverse.freemarker.deployment;
 
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -25,10 +26,12 @@ import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
+import io.quarkus.deployment.builditem.HotDeploymentWatchedFileBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.NativeImageResourcePatternsBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.NativeImageResourcePatternsBuildItem.Builder;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.RuntimeInitializedClassBuildItem;
+import io.quarkus.util.GlobUtil;
 
 public class FreemarkerProcessor {
 
@@ -84,6 +87,25 @@ public class FreemarkerProcessor {
                     .map(templateSet::resolve)
                     .forEach(builder::includeGlob);
             nativeImageResources.produce(builder.build());
+        }
+    }
+
+    /**
+     * Restart the application in dev mode when a template changes, so that templates injected with
+     * {@link TemplatePath} (parsed once when the injecting bean is created) are reloaded.
+     */
+    @BuildStep
+    void watchTemplates(
+            List<TemplateSetBuildItem> templateSets,
+            BuildProducer<HotDeploymentWatchedFileBuildItem> watchedFiles) {
+        for (TemplateSetBuildItem templateSet : templateSets) {
+            for (String glob : templateSet.getIncludeGlobs()) {
+                final Pattern pattern = Pattern.compile(GlobUtil.toRegexPattern(templateSet.resolve(glob)));
+                watchedFiles.produce(HotDeploymentWatchedFileBuildItem.builder()
+                        .setLocationPredicate(path -> pattern.matcher(path).matches())
+                        .setRestartNeeded(true)
+                        .build());
+            }
         }
     }
 

@@ -23,6 +23,7 @@ import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateExceptionHandler;
 import io.quarkus.arc.DefaultBean;
+import io.quarkus.runtime.LaunchMode;
 
 @Singleton
 public class FreemarkerConfigurationProducer {
@@ -49,6 +50,11 @@ public class FreemarkerConfigurationProducer {
 
         MultiTemplateLoader mtl = new MultiTemplateLoader(loaders.toArray(new TemplateLoader[0]));
         cfg.setTemplateLoader(mtl);
+
+        if (LaunchMode.current() == LaunchMode.DEVELOPMENT) {
+            // always check templates for changes in dev mode (FreeMarker caches them for 5s by default)
+            cfg.setTemplateUpdateDelayMilliseconds(0);
+        }
 
         config.defaultEncoding().ifPresent(cfg::setDefaultEncoding);
         config.templateExceptionHandler().ifPresent(s -> cfg.setTemplateExceptionHandler(getExceptionHandler(s)));
