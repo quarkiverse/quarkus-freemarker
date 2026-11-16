@@ -1,5 +1,7 @@
 # Quarkus Freemarker
 
+test
+
 Freemarker is a very popular and mature templating engine. Its integration as a Quarkus extension
 provides developers ease of configuration, and offers support for native images.
 
