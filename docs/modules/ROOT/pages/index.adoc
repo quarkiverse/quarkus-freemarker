@@ -114,7 +114,28 @@ Here is an example of using a `Configuration` bean instead of a `Template` bean:
 
 The rest of the configuration properties can be provided at runtime, such as
 a list of external filesystem paths where to find additional templates,
-and optional properties that can be configured on the Freemarker `Configuration` class.
+and optional properties that can be configured on the Freemarker `Configuration` class,
+such as the locale, the time zone and the date and time formats:
+
+[source,properties]
+----
+quarkus.freemarker.locale=fr-FR
+quarkus.freemarker.time-zone=Europe/Paris
+quarkus.freemarker.date-format=dd/MM/yyyy
+quarkus.freemarker.time-format=HH:mm
+quarkus.freemarker.datetime-format=dd/MM/yyyy HH:mm
+----
+
+Any other FreeMarker setting can be provided with `quarkus.freemarker.settings."setting-name"`,
+using the setting names and value syntax described in the
+https://freemarker.apache.org/docs/api/freemarker/template/Configuration.html#setSetting-java.lang.String-java.lang.String-[FreeMarker documentation].
+These settings are applied after the dedicated properties, so they take precedence:
+
+[source,properties]
+----
+quarkus.freemarker.settings.api_builtin_enabled=true
+quarkus.freemarker.settings.whitespace_stripping=false
+----
 
 == Directives
 

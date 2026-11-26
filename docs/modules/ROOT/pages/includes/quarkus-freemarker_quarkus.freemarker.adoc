@@ -290,6 +290,195 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |
 
+a| [[quarkus-freemarker_quarkus-freemarker-locale]] [.property-path]##link:#quarkus-freemarker_quarkus-freemarker-locale[`+++quarkus.freemarker.locale+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.freemarker.locale+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The locale used for number and date formatting, and for locale-specific template lookup. The value is a language tag, such as `fr-FR` or `en-US`.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_LOCALE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_LOCALE+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Locale.html[Locale]
+|
+
+a| [[quarkus-freemarker_quarkus-freemarker-time-zone]] [.property-path]##link:#quarkus-freemarker_quarkus-freemarker-time-zone[`+++quarkus.freemarker.time-zone+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.freemarker.time-zone+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The time zone used to format date and time values, such as `Europe/Paris` or `UTC`.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_TIME_ZONE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_TIME_ZONE+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-freemarker_quarkus-freemarker-sql-date-and-time-time-zone]] [.property-path]##link:#quarkus-freemarker_quarkus-freemarker-sql-date-and-time-time-zone[`+++quarkus.freemarker.sql-date-and-time-time-zone+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.freemarker.sql-date-and-time-time-zone+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The time zone used to format `java.sql.Date` and `java.sql.Time` values. If not set, the `time-zone` setting is used.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_SQL_DATE_AND_TIME_TIME_ZONE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_SQL_DATE_AND_TIME_TIME_ZONE+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-freemarker_quarkus-freemarker-date-format]] [.property-path]##link:#quarkus-freemarker_quarkus-freemarker-date-format[`+++quarkus.freemarker.date-format+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.freemarker.date-format+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The default format used to convert date-only values to strings, such as `dd/MM/yyyy` or `iso`.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_DATE_FORMAT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_DATE_FORMAT+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-freemarker_quarkus-freemarker-time-format]] [.property-path]##link:#quarkus-freemarker_quarkus-freemarker-time-format[`+++quarkus.freemarker.time-format+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.freemarker.time-format+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The default format used to convert time-only values to strings, such as `HH:mm:ss` or `short`.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_TIME_FORMAT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_TIME_FORMAT+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-freemarker_quarkus-freemarker-datetime-format]] [.property-path]##link:#quarkus-freemarker_quarkus-freemarker-datetime-format[`+++quarkus.freemarker.datetime-format+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.freemarker.datetime-format+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The default format used to convert date-time values to strings, such as `dd/MM/yyyy HH:mm` or `iso`.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_DATETIME_FORMAT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_DATETIME_FORMAT+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-freemarker_quarkus-freemarker-output-encoding]] [.property-path]##link:#quarkus-freemarker_quarkus-freemarker-output-encoding[`+++quarkus.freemarker.output-encoding+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.freemarker.output-encoding+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The charset of the output, used by URL escaping when `url-escaping-charset` is not set.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_OUTPUT_ENCODING+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_OUTPUT_ENCODING+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-freemarker_quarkus-freemarker-url-escaping-charset]] [.property-path]##link:#quarkus-freemarker_quarkus-freemarker-url-escaping-charset[`+++quarkus.freemarker.url-escaping-charset+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.freemarker.url-escaping-charset+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The charset used for URL escaping, for example by the `?url` built-in.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_URL_ESCAPING_CHARSET+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_URL_ESCAPING_CHARSET+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-freemarker_quarkus-freemarker-settings-setting-name]] [.property-path]##link:#quarkus-freemarker_quarkus-freemarker-settings-setting-name[`+++quarkus.freemarker.settings."setting-name"+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.freemarker.settings."setting-name"+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Any other FreeMarker setting, applied with `Configuration++#++setSetting(String, String)`. The key is the setting name as documented in the FreeMarker manual (snake case, for example `api_builtin_enabled`), and the value uses the same syntax as in a FreeMarker properties file. These settings are applied after the dedicated properties of this extension, so they override them.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FREEMARKER_SETTINGS__SETTING_NAME_+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FREEMARKER_SETTINGS__SETTING_NAME_+++`
+endif::add-copy-button-to-env-var[]
+--
+|Map<String,String>
+|
+
 h|[[quarkus-freemarker_section_quarkus-freemarker]] [.section-name.section-level0]##link:#quarkus-freemarker_section_quarkus-freemarker[Additional named template sets]##
 h|Type
 h|Default

@@ -54,4 +54,18 @@ public class FreemarkerTest {
         RestAssured.when().get("/freemarker/personext").then().body(is(NAME_EXPECTED_VALUE));
     }
 
+    @Test
+    public void dates() {
+        // locale, time zone and formats from typed properties; boolean format overridden by the settings map
+        // "é" in ISO-8859-1 (url-escaping-charset) is %E9, while it would be %C3%A9 in UTF-8
+        RestAssured.when().get("/freemarker/dates").then()
+                .body(is("15/01/2026|14:45|15/01/2026 14:45|fr_FR|oui|%E9"));
+    }
+
+    @Test
+    public void settings() {
+        RestAssured.when().get("/freemarker/settings").then()
+                .body(is("sqlDateAndTimeTimeZone=UTC|outputEncoding=UTF-8|apiBuiltinEnabled=true"));
+    }
+
 }

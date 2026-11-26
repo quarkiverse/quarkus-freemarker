@@ -4,6 +4,8 @@ import static jakarta.ws.rs.core.MediaType.TEXT_PLAIN;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.time.Instant;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -97,6 +99,26 @@ public class FreemarkerTestResource {
     @Produces(TEXT_PLAIN)
     public String personext() throws IOException, TemplateException {
         return process(EXTERNAL_EXTERNAL_FTL, createPersonModel());
+    }
+
+    @GET
+    @Path("/dates")
+    @Produces(TEXT_PLAIN)
+    public String dates() throws IOException, TemplateException {
+        Map<String, Object> model = new HashMap<>();
+        model.put("date", Date.from(Instant.parse("2026-01-15T13:45:00Z")));
+        model.put("flag", true);
+        model.put("text", "é");
+        return process("dates.ftl", model);
+    }
+
+    @GET
+    @Path("/settings")
+    @Produces(TEXT_PLAIN)
+    public String settings() {
+        return "sqlDateAndTimeTimeZone=" + configuration.getSQLDateAndTimeTimeZone().getID()
+                + "|outputEncoding=" + configuration.getOutputEncoding()
+                + "|apiBuiltinEnabled=" + configuration.isAPIBuiltinEnabled();
     }
 
     private String process(String templateName, Object model) throws IOException, TemplateException {
