@@ -2,7 +2,6 @@ package io.quarkiverse.freemarker.deployment;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import jakarta.inject.Singleton;
@@ -16,14 +15,13 @@ import io.quarkiverse.freemarker.runtime.FreemarkerBuildConfig;
 import io.quarkiverse.freemarker.runtime.FreemarkerBuildConfig.TemplateSet;
 import io.quarkiverse.freemarker.runtime.FreemarkerBuildConfigSupport;
 import io.quarkiverse.freemarker.runtime.FreemarkerConfigurationProducer;
-import io.quarkiverse.freemarker.runtime.FreemarkerRecorder;
 import io.quarkiverse.freemarker.runtime.FreemarkerTemplateProducer;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
+import io.quarkus.core.Phase;
+import io.quarkus.core.deployment.service.ServiceRegistrar;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
-import io.quarkus.deployment.annotations.ExecutionTime;
-import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.NativeImageResourcePatternsBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.NativeImageResourcePatternsBuildItem.Builder;
@@ -107,18 +105,22 @@ public class FreemarkerProcessor {
     }
 
     @BuildStep
-    @Record(ExecutionTime.STATIC_INIT)
-    SyntheticBeanBuildItem pushConfigurationBean(FreemarkerRecorder recorder,
+    SyntheticBeanBuildItem pushConfigurationBean(ServiceRegistrar serviceRegistrar,
             List<TemplateSetBuildItem> templateSets,
             FreemarkerBuildConfig buildConfig) {
         final List<String> basePaths = templateSets.stream()
                 .map(TemplateSetBuildItem::getBasePath)
                 .map(basePath -> basePath.orElse(""))
-                .collect(Collectors.toList());
+                .toList();
+        final Map<String, String> directives = Map.copyOf(buildConfig.directives());
+
+        serviceRegistrar.forService(FreemarkerBuildConfigSupport.class)
+                .atPhase(Phase.STATIC_INIT)
+                .onStart(ctx -> new FreemarkerBuildConfigSupport(basePaths, directives));
 
         return SyntheticBeanBuildItem.configure(FreemarkerBuildConfigSupport.class)
                 .scope(Singleton.class)
-                .supplier(recorder.freemarkerBuildConfigSupport(basePaths, buildConfig.directives()))
+                .serviceValue(FreemarkerBuildConfigSupport.class)
                 .done();
     }
 }
